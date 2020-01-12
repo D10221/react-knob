@@ -28,7 +28,7 @@ const App = () => {
   function render() {
     return (
       <>
-        <header> Fucking Knob </header>
+        <header>React Knob</header>
         <div className={className}>
           <Knob
             value={state.value}

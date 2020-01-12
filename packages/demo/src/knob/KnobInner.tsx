@@ -1,28 +1,34 @@
-import React, { useEffect } from "react";
-import css from "./css";
-const KnobInner = ({
-  children = undefined as React.ReactNode | undefined,
+import React, { FunctionComponent } from "react";
+import useStyle from "./react-css";
+import classNames from "./classNames";
+import randomName from "./randomName";
+type KnobInnerProps = Partial<
+  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
+>;
+const styles = `
+position: relative;
+width: 85%;
+height: 85%;
+border-radius: 50%;
+border: solid #111111 5px;  
+background-color: #F37D02;
+margin:0;
+padding: 0;
+overflow: hidden;
+`;
+/** preformance issues */
+const cachedNamee = randomName();
+/** */
+const KnobInner: FunctionComponent<KnobInnerProps> = ({
+  children,
+  className,
   ...props
 }) => {
-  const className = "knobInner";
-  useEffect(() =>
-    css(
-      `
-        position: relative;
-        width: 85%;
-        height: 85%;
-        border-radius: 50%;
-        border: solid #111111 5px;  
-        background-color: #F37D02;
-        margin:0;
-        padding: 0;
-        overflow: hidden;
-  `,
-      className,
-    ),
-  );
   return (
-    <div className={className} {...props}>
+    <div
+      className={classNames(useStyle(styles, cachedNamee), className)}
+      {...props}
+    >
       {children}
     </div>
   );

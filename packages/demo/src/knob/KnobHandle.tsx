@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
-import css from "./css";
-const KnobHandle = ({
-  children = undefined as React.ReactNode | undefined,
-  ...props
-}) => {
-  const className = "knobHandle-xxx-yyy-123";
-  const style = `
+import React, { FunctionComponent } from "react";
+import useStyle from "./react-css";
+import classNames from "./classNames";
+import randomName from "./randomName";
+type Props = Partial<
+  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
+>;
+/** */
+const styles = `
   position: relative;
   width: 10%;
   height: 45%;
@@ -16,9 +17,19 @@ const KnobHandle = ({
   margin:0;
   padding: 0;
   `;
-  useEffect(() => css(style, className));
+/** preformance */
+const cachedName = randomName();
+/** */
+const KnobHandle: FunctionComponent<Props> = ({
+  children,
+  className,
+  ...props
+}) => {
   return (
-    <div className={className} {...props}>
+    <div
+      className={classNames(useStyle(styles, cachedName), className)}
+      {...props}
+    >
       {children}
     </div>
   );
