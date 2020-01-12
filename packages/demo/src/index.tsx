@@ -18,10 +18,12 @@ const App = () => {
     return (
       <>
         <header>
-          <a href={repoUrl}>React Knob</a>
+          <a aria-label="project home" href={repoUrl}>
+            React Knob
+          </a>
         </header>
         <main>
-          <Knob
+          <Knob            
             value={state.value}
             onChange={handleChange}
             size={65}
@@ -31,6 +33,7 @@ const App = () => {
             bufferSize={300}
           ></Knob>
           <input
+            aria-label="knob value"
             type="number"
             value={state.value}
             onChange={e => handleChange(e.target.valueAsNumber)}
@@ -38,8 +41,8 @@ const App = () => {
         </main>
         <footer>
           <div>
-            <span aria-label="Feedback" aria-hidden="false">
-              💬
+            <span role="img" aria-label="Feedback">
+            {"💬"}
             </span>
             <a href={issuesUrl}>Feedback</a>
           </div>

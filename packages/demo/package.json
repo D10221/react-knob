@@ -1,6 +1,7 @@
 {
   "name": "@d10221/react-knob-demo",
   "version": "0.1.0",
+  "homepage": "docs",
   "private": true,
   "dependencies": {
     "@d10221/react-knob": "1.0.0-beta.1",
