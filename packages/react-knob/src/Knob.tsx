@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import KnobContainer, { KnobContainerProps } from "./KnobContainer";
 import Rotate from "./rotate";
 import PointerHandler from "./PointerHandler";
@@ -11,8 +11,9 @@ import {
   DEFAULT_MIN,
   DEFAULT_VALUE,
 } from "./defaults";
+import KnobOverlay from "./KnobOverlay";
 /**
- * Create a knob with default skin if no children provided 
+ * Create a knob with default skin if no children provided
  */
 const Knob = ({
   value = DEFAULT_VALUE,
@@ -26,7 +27,31 @@ const Knob = ({
   children = undefined as React.ReactNode | undefined,
   containerProps = undefined as Omit<KnobContainerProps, "size"> | undefined,
 }) => {
-  const onPointerDown = PointerHandler({ value, min, max, step, onChange });
+  const [{ scale, cursorPos, knobCenter, topPosition }, setState] = useState({
+    scale: 1,
+    cursorPos: [] as number[],
+    knobCenter: [] as number[],
+    topPosition: 0,
+  });
+
+  const onPointerDown = PointerHandler({
+    value,
+    min,
+    max,
+    step,
+    onChange: ({
+      value: _value,
+      cursorPos,
+      knobCenter,
+      scale,
+      topPosition,
+    }) => {
+      if (value !== _value) {
+        if (onChange) onChange(_value);
+        setState({ cursorPos, knobCenter, scale, topPosition });
+      }
+    },
+  });
   return (
     <KnobContainer
       size={size}
@@ -36,6 +61,12 @@ const Knob = ({
       <Rotate rotation={getRotation({ value, min, max, bufferSize })}>
         {children || <KnobSkin />}
       </Rotate>
+      <KnobOverlay
+        cursorPos={cursorPos}
+        knobCenter={knobCenter}
+        scale={scale}
+        topPosition={topPosition}
+      />
     </KnobContainer>
   );
 };

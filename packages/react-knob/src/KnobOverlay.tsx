@@ -1,14 +1,22 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { BASE_HEIGHT } from "./defaults";
 import { cartesian2Polar } from "./utils";
 
-export default function KnobOverlay({
+type KnobOverlayProps = {
+  topPosition: number;
+  scale: number;
+  knobCenter: number[];
+  cursorPos: number[];
+  overlayColor?: string | undefined;
+};
+
+const KnobOverlay: FunctionComponent<KnobOverlayProps> = ({
   topPosition = 0,
   scale = 1,
-  knobCenter = [] as number[],
-  cursorPos = [] as number[],
+  knobCenter = [],
+  cursorPos = [],
   overlayColor = "#fff",
-}) {
+}) => {
   const baseLineStyle = {
     position: "absolute",
     top: 0,
@@ -83,4 +91,6 @@ export default function KnobOverlay({
       <div style={styles.bottomPath}></div>
     </div>
   );
-}
+};
+
+export default KnobOverlay;
