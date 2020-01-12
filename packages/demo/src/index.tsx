@@ -39,7 +39,7 @@ const App = () => {
         <footer>
           <div>
             <span aria-label="Feedback" aria-hidden="false">
-              ☁
+              💬
             </span>
             <a href={issuesUrl}>Feedback</a>
           </div>

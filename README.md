@@ -1,10 +1,12 @@
 React Knob (WIP)
 
-Based on:  
+Refactored from, based on [io-808 Knob](https://github.com/vincentriemer/io-808) and [io-808-knob-demo](https://codepen.io/vincentriemer/pen/YZVdQb)
 
-https://github.com/vincentriemer/io-808
-https://codepen.io/vincentriemer/pen/YZVdQb
+![screenshot](./packages/demo/public/screenshot.png "Screeenshot")
 
 [Source](./packages/react-knob)
-[Demo](./packages/deemo)
+
+[Demo src](./packages/demo)
+
+[Demo](https://d10221.github.io/react-knob)
 
