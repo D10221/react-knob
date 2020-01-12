@@ -17,7 +17,7 @@
     "start": "react-scripts start",
     "build": "rimraf build && react-scripts build",
     "postbuild": "rimraf ../../docs && cp build ../../docs -r",
-    "test": "react-scripts test",
+    "test": "echo NOPE!",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

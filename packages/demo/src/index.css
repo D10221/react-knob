@@ -36,7 +36,8 @@ input {
   color: var(--primary)
 }
 a {
-  color: #61dafb;
+  color: #61dafb;  
+  text-decoration: none;  
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -52,4 +53,16 @@ main {
    justify-items: center;
    margin:0;
    padding: 0;
+}
+footer {
+  font-size: small;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+footer div {  
+  /* align-items: center; */  
+}
+footer div a {
+  padding-left: 0.5rem;  
 }
