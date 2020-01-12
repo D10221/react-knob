@@ -33,3 +33,6 @@ export function getRotation({
 }) {
   return getNormalizedValue(value, min, max) * bufferSize - bufferSize / 2;
 }
+/** */
+export const ownerDocument = (node?: Element | Text | null | undefined) =>
+  (node && node.ownerDocument) || document;

@@ -1,6 +1,6 @@
 import React from "react";
 import { BASE_HEIGHT } from "./defaults";
-import { isHtmlElement, getNormalizedValue, snap } from "./utils";
+import { isHtmlElement, getNormalizedValue, snap, ownerDocument } from "./utils";
 /**
  *
  * @param config Creates documetn bound pointer events handler
@@ -33,10 +33,11 @@ const PointerHandler = ({ value = 0, min = 0, max = 100, step = 1, onChange = un
       onChange(unnormalizedValue);
     }
   }
-  document.addEventListener("pointermove", onPointerMove, false);
-  document.addEventListener("pointerup", function removeEventListeners() {
-    document.removeEventListener("pointermove", onPointerMove, false);
-    document.removeEventListener("pointerup", removeEventListeners, false);
+  const doc = ownerDocument(currentTarget); // multi doc support ? 
+  doc.addEventListener("pointermove", onPointerMove, false);
+  doc.addEventListener("pointerup", function removeEventListeners() {
+    doc.removeEventListener("pointermove", onPointerMove, false);
+    doc.removeEventListener("pointerup", removeEventListeners, false);
   }, false);
 };
 export default PointerHandler;
