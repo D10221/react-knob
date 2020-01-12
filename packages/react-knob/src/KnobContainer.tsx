@@ -37,7 +37,18 @@ const KnobContainer: FunctionComponent<KnobContainerProps> = ({
       }}
       className={classNames(useStyle(cssclass), className)}
     >
-      {children}
+      {React.Children.map(children, (c=>{
+        if(React.isValidElement(c)){
+          const {style, ...p } = c.props;          
+          return React.cloneElement(c, { ...p, style: {
+            ...style,
+            // disable children 'clicks'
+            touchAction: "none",
+            pointerEvents: "none",            
+          } as React.CSSProperties})
+        }
+        return c;
+      }))}
     </div>
   );
 };
