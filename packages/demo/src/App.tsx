@@ -1,25 +1,8 @@
-import React, { useState, useEffect } from "react";
-import Knob from "./knob";
-import css from "./knob/css";
+import React, { useState } from "react";
+import Knob from "@d10221/react-knob";
 
 const App = () => {
   const [state, setState] = useState({ value: 0 });
-  const className = "wrapper-xyz";
-  useEffect(() =>
-    css(
-      ` 
-  /* border: 1px solid pink;   */
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
-  justify-items: center;
-  margin:0;
-  padding: 0;`,
-      className,
-    ),
-  );
   function handleChange(value: number) {
     if (value < 0) return;
     if (value > 100) return;
@@ -29,7 +12,7 @@ const App = () => {
     return (
       <>
         <header>React Knob</header>
-        <div className={className}>
+        <main>
           <Knob
             value={state.value}
             onChange={handleChange}
@@ -39,7 +22,7 @@ const App = () => {
             step={1}
             bufferSize={300}
           ></Knob>
-        </div>
+        </main>
         <input
           type="number"
           value={state.value}

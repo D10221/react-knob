@@ -42,3 +42,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+main {
+   /* border: 1px solid pink;   */
+   display: flex;
+   flex-direction: column;
+   align-content: center;
+   align-items: center;
+   justify-content: center;
+   justify-items: center;
+   margin:0;
+   padding: 0;
+}
