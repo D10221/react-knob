@@ -33,7 +33,7 @@ type PointerHandler = (p: {
   e: PointerEvent | MouseEvent | React.MouseEvent | React.PointerEvent,
 ) => any;
 /**
- * TODO: move logic out, leave just the events ? 
+ * TODO: move logic out?, leave just the events ? 
  * @param config Creates parent document bound pointer events handler
  */
 const PointerHandler: PointerHandler = ({

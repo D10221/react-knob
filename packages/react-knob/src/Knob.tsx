@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import KnobContainer, { KnobContainerProps } from "./KnobContainer";
 import Rotate from "./rotate";
 import PointerHandler from "./PointerHandler";
@@ -12,6 +12,8 @@ import {
   DEFAULT_VALUE,
 } from "./defaults";
 import KnobOverlay from "./KnobOverlay";
+import useKnobState from "./KnobState";
+type OnChange = (value: number) => any;
 /**
  * Create a knob with default skin if no children provided
  */
@@ -23,32 +25,23 @@ const Knob = ({
   size = DEFAULT_SIZE,
   bufferSize = 360,
   //
-  onChange = undefined as ((value: number) => any) | undefined,
+  onChange: _onchange = undefined as OnChange | undefined,
   children = undefined as React.ReactNode | undefined,
   containerProps = undefined as Omit<KnobContainerProps, "size"> | undefined,
 }) => {
-  const [{ scale, cursorPos, knobCenter, topPosition }, setState] = useState({
-    scale: 1,
-    cursorPos: [] as number[],
-    knobCenter: [] as number[],
-    topPosition: 0,
-  });
-
+  const onChange: OnChange = val =>
+    typeof _onchange === "function" && val !== value && _onchange(val);
+    
+  const { state, move, done, start } = useKnobState(onChange);
+  const { cursorPos, knobCenter, scale, topPosition } = state;
   const onPointerDown = PointerHandler({
     value,
     min,
     max,
     step,
-    onMove: ({ value: _value, cursorPos, knobCenter, scale, topPosition }) => {
-      if (value !== _value) {
-        if (onChange) onChange(_value);
-        setState({ cursorPos, knobCenter, scale, topPosition });
-      }
-    },
-    // onDown: () {/* ? */},
-    onUp: () => {
-      setState({ scale: 1, cursorPos: [], knobCenter: [], topPosition: 0 });
-    },
+    onMove: move,
+    onDown: start,
+    onUp: done,
   });
   return (
     <KnobContainer
