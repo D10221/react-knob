@@ -31,7 +31,7 @@ const App = () => {
             max={100}
             step={1}
             bufferSize={300}
-          ></Knob>
+          />
           <input
             aria-label="knob value"
             type="number"
