@@ -39,17 +39,15 @@ const Knob = ({
     min,
     max,
     step,
-    onChange: ({
-      value: _value,
-      cursorPos,
-      knobCenter,
-      scale,
-      topPosition,
-    }) => {
+    onMove: ({ value: _value, cursorPos, knobCenter, scale, topPosition }) => {
       if (value !== _value) {
         if (onChange) onChange(_value);
         setState({ cursorPos, knobCenter, scale, topPosition });
       }
+    },
+    // onDown: () {/* ? */},
+    onUp: () => {
+      setState({ scale: 1, cursorPos: [], knobCenter: [], topPosition: 0 });
     },
   });
   return (
@@ -61,12 +59,14 @@ const Knob = ({
       <Rotate rotation={getRotation({ value, min, max, bufferSize })}>
         {children || <KnobSkin />}
       </Rotate>
-      <KnobOverlay
-        cursorPos={cursorPos}
-        knobCenter={knobCenter}
-        scale={scale}
-        topPosition={topPosition}
-      />
+      {!topPosition ? null : (
+        <KnobOverlay
+          cursorPos={cursorPos}
+          knobCenter={knobCenter}
+          scale={scale}
+          topPosition={topPosition}
+        />
+      )}
     </KnobContainer>
   );
 };

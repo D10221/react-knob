@@ -14,32 +14,47 @@ type OnChange = (changes: {
   knobCenter: number[];
   topPosition: number;
 }) => any;
-
+/** */
+type OnUp = () => any;
+type OnDown = (x: {
+  clientY: number,
+  rect: number[],
+})=> any;
+/** */
 type PointerHandler = (p: {
   value: number;
   min: number;
   max: number;
   step: number;
-  onChange: OnChange;
+  onMove: OnChange;
+  onUp?: OnUp;
+  onDown?: OnDown;
 }) => (
   e: PointerEvent | MouseEvent | React.MouseEvent | React.PointerEvent,
 ) => any;
 /**
- *
- * @param config Creates documetn bound pointer events handler
+ * TODO: move logic out, leave just the events ? 
+ * @param config Creates parent document bound pointer events handler
  */
 const PointerHandler: PointerHandler = ({
   value = 0,
   min = 0,
   max = 100,
   step = 1,
-  onChange,
+  onMove,
+  onUp,
+  onDown
 }) => ev => {
-  ev.preventDefault();
+  ev.preventDefault();  
   const { currentTarget } = ev;
   if (!isHtmlElement(currentTarget)) return;
-  const startY = ev.clientY; //hold initial Y value
+  const startY = ev.clientY; //hold initial Y value  
   const knobRect = (currentTarget as any).getBoundingClientRect();
+  if(typeof onDown === "function") onDown({
+    // TODO: opportunity to move logic up
+    clientY: ev.clientY,
+    rect: knobRect
+  });
   /** */
   function onPointerMove(me: PointerEvent | MouseEvent) {
     me.preventDefault();
@@ -60,14 +75,15 @@ const PointerHandler: PointerHandler = ({
     const normalizedValue =
       (100 - (startY - topPosition) * (100 / (BASE_HEIGHT * scale))) / 100;
     const unnormalizedValue = snap(normalizedValue * (max - min), step, min);
-    if (unnormalizedValue !== value && onChange) {
-      onChange({
+    if (unnormalizedValue !== value && onMove) {
+      onMove({
+        // TODO: opportunity to move logic up
         value: unnormalizedValue,
         scale,
         cursorPos: [clientX, clientY],
         knobCenter: [
-          knobRect.left + (knobRect.width / 2),
-          knobRect.top + (knobRect.height / 2)
+          knobRect.left + knobRect.width / 2,
+          knobRect.top + knobRect.height / 2,
         ],
         topPosition,
       });
@@ -80,6 +96,7 @@ const PointerHandler: PointerHandler = ({
     function removeEventListeners() {
       doc.removeEventListener("pointermove", onPointerMove, false);
       doc.removeEventListener("pointerup", removeEventListeners, false);
+      if (typeof onUp === "function") onUp(); // TODO: opportunity to move logic up
     },
     false,
   );

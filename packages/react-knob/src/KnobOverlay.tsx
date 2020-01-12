@@ -65,7 +65,7 @@ const KnobOverlay: FunctionComponent<KnobOverlayProps> = ({
       `translateZ(0) scaleX(12)`,
   });
 
-  const styles: any = {
+  const styles: {[key: string]: React.CSSProperties} = {
     knobPath,
     bodyPath,
     topPath,
@@ -79,6 +79,8 @@ const KnobOverlay: FunctionComponent<KnobOverlayProps> = ({
       width: window.innerWidth,
       height: window.innerHeight,
       cursor: "ns-resize",
+      touchAction: "none",
+      pointerEvents: "none",
     },
   };
 
