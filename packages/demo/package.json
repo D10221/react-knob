@@ -10,11 +10,13 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.3.0",
+    "rimraf": "^3.0.0",
     "typescript": "^3.7.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "rimraf build && react-scripts build",
+    "postbuild": "rimraf ../../docs && cp build ../../docs -r",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

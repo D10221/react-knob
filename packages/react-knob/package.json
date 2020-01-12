@@ -3,22 +3,20 @@
   "version": "1.0.0-beta.1",
   "private": true,
   "main": "build/index.js",
-  "types": "build/index.d.ts",  
+  "types": "build/index.d.ts",
   "author": "<d10221@protonmail.com>",
   "description": "React Knob",
   "repository": "https://github.com/D10221/react-knob.git",
   "homepage": "https://github.com/D10221/react-knob.git",
   "license": "MIT",
-  "scripts": {    
+  "scripts": {
     "build": "rimraf build && tsc -p .",
     "watch": "rimraf build && tsc -p . --watch",
-    "test": "react-scripts test"
+    "test": "echo TODO: add jest, write tests",
+    "bundle": "echo TODO: add bundler, configure it"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "react-scripts": "3.3.0",
+    "rimraf": "^3.0.0",
     "typescript": "^3.7.4"
   },
   "peerDependencies": {
