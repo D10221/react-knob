@@ -7,7 +7,7 @@
   "author": "<d10221@protonmail.com>",
   "description": "React Knob",
   "repository": "https://github.com/D10221/react-knob.git",
-  "homepage": "https://github.com/D10221/react-knob.git",
+  "homepage": "https://github.com/D10221/react-knob.git#readme",
   "license": "MIT",
   "scripts": {
     "build": "rimraf build && tsc -p .",

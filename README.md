@@ -8,5 +8,4 @@ Refactored from, based on [io-808 Knob](https://github.com/vincentriemer/io-808)
 
 [Demo src](./packages/demo)
 
-[Demo](https://d10221.github.io/react-knob)
-
+[Demo](https://d10221.github.io/react-knob/)
