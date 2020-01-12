@@ -4,15 +4,22 @@ import Rotate from "./rotate";
 import PointerHandler from "./PointerHandler";
 import { getRotation } from "./utils";
 import { KnobSkin } from "./KnobSkin";
+import {
+  DEFAULT_SIZE,
+  DEFAULT_STEP,
+  DEFAULT_MAX,
+  DEFAULT_MIN,
+  DEFAULT_VALUE,
+} from "./defaults";
 /**
- * 
+ * Create a knob with default skin if no children provided 
  */
 const Knob = ({
-  value = 0,
-  min = 0,
-  max = 100,
-  step = 1,
-  size = 65 as number | string,
+  value = DEFAULT_VALUE,
+  min = DEFAULT_MIN,
+  max = DEFAULT_MAX,
+  step = DEFAULT_STEP,
+  size = DEFAULT_SIZE,
   bufferSize = 360,
   //
   onChange = undefined as ((value: number) => any) | undefined,

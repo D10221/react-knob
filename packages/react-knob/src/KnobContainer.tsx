@@ -1,11 +1,12 @@
 import React, { FunctionComponent } from "react";
 import classNames from "./classNames";
 import useStyle from "./react-css";
+import { DEFAULT_SIZE } from "./defaults";
 
 export type KnobContainerProps = Partial<
   React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 > & {
-  size: number | string | undefined;
+  size: number | string;
 };
 const cssclass = `
   margin:0;
@@ -21,7 +22,7 @@ const cssclass = `
 /** */
 const KnobContainer: FunctionComponent<KnobContainerProps> = ({
   children,
-  size,
+  size = DEFAULT_SIZE,
   className,
   style,
   ...props

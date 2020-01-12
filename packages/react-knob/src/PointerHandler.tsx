@@ -1,5 +1,5 @@
 import React from "react";
-import { BASE_HEIGHT } from "./Constants";
+import { BASE_HEIGHT } from "./defaults";
 import { isHtmlElement, getNormalizedValue, snap } from "./utils";
 /**
  *
