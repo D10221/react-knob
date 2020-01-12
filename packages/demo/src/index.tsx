@@ -5,7 +5,7 @@ import Knob from "@d10221/react-knob";
 import * as serviceWorker from "./serviceWorker";
 
 const repoUrl = "https://github.com/D10221/react-knob";
-const issuesUrl = "https://github.com/D10221/react-knob#issues";
+const issuesUrl = "https://github.com/D10221/react-knob/issues";
 
 const App = () => {
   const [state, setState] = useState({ value: 0 });

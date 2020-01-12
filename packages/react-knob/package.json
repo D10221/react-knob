@@ -8,6 +8,7 @@
   "description": "React Knob",
   "repository": "https://github.com/D10221/react-knob.git",
   "homepage": "https://github.com/D10221/react-knob.git#readme",
+  "bugs": "https://github.com/D10221/react-knob/issues",
   "license": "MIT",
   "scripts": {
     "build": "rimraf build && tsc -p .",
