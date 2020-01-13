@@ -9,8 +9,9 @@
 # testing
 **/coverage
 
-# production
+# 
 **/build/*
+**/dist/*
 
 # misc
 .DS_Store
@@ -20,3 +21,5 @@
 *.gz
 *.tgz
 *.lock
+# microbundle
+*_cache_*

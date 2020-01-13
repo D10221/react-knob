@@ -1,8 +1,11 @@
 {
   "name": "@d10221/react-knob",
-  "version": "1.0.0-beta.2",  
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "version": "1.0.0-beta.2",
+  "main": "dist/index.js",
+  "umd:main": "dist/index.umd.js",
+  "module": "dist/index.esm.js",
+  "source": "src/index.tsx",
+  "types": "dist/index.d.ts",
   "author": "<d10221@protonmail.com>",
   "description": "React Knob",
   "repository": "https://github.com/D10221/react-knob.git",
@@ -13,9 +16,10 @@
     "build": "rimraf build && tsc -p .",
     "watch": "rimraf build && tsc -p . --watch",
     "test": "echo TODO: add jest, write tests",
-    "bundle": "echo TODO: add bundler, configure it"
+    "bundle": "microbundle --watch"
   },
   "devDependencies": {
+    "microbundle": "^0.11.0",
     "rimraf": "^3.0.0",
     "typescript": "^3.7.4"
   },
@@ -38,7 +42,8 @@
       "last 1 safari version"
     ]
   },
-  "files": [
-    "build/*"
+  "files": [    
+    "dist/*",
+    "src/*"
   ]
 }
