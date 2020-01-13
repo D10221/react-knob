@@ -4,9 +4,7 @@ import classNames from "./classNames";
 import randomName from "./randomName";
 import { DEFAULT_BORDER_COLOR, DEFAULT_COLOR } from "./defaults";
 /** */
-type CircleProps = Partial<
-  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
-> & {
+type CircleProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
   borderColor?: string;
 };
 /** preformance issues */

@@ -1,5 +1,6 @@
 {
-  "name": "@d10221/react-knob",
+  "name": "@d10221/react-knob-skin-css",
+  "private": true,
   "version": "1.0.0-beta.2",
   "main": "dist/index.js",
   "umd:main": "dist/index.umd.js",
@@ -7,15 +8,15 @@
   "source": "src/index.tsx",
   "types": "dist/index.d.ts",
   "author": "<d10221@protonmail.com>",
-  "description": "React Knob",
+  "description": "React Knob Skin (internal)",
   "repository": "https://github.com/D10221/react-knob.git",
   "homepage": "https://github.com/D10221/react-knob.git#readme",
   "bugs": "https://github.com/D10221/react-knob/issues",
   "license": "MIT",
   "scripts": {
-    "build": "rimraf dist && microbundle",
+    "build": "microbundle",
     "test": "echo TODO: add jest, write tests",
-    "start": "rimraf dist && microbundle --watch"
+    "start": "microbundle --watch"
   },
   "devDependencies": {
     "microbundle": "^0.11.0",
