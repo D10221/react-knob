@@ -15,7 +15,7 @@ API:
  * Gate for options
  * Controls overlay visibility  
 
-```javascript
+```typescript
 /**
  * Main/Entry Component
  */
@@ -63,7 +63,9 @@ Skins:
 
 The only skin requirement is to accept and apply the custom component the style mutation applied by [`<Rotate />`](./src/rotate.ts)
 
-```javascript
+Sample Skin:
+
+```typescript
 /**
  * It needs to forward down the style: transform
  */
@@ -81,11 +83,18 @@ export default function SimpleSkin(props: React.SVGProps<SVGSVGElement>) {
     <circle
       cx="50%"
       cy="50%"
-      r={"47%"}
-      style={{
-        // filter: "url(#drop-shadow)"
-      }}
+      r={"47%"}     
     />
     <rect x="48%" y="4%" width="5%" height="33%" fill="white" />
   </svg>
+```
+
+Using inbuilt Skins:   
+
+Replace default children 
+
+```javascript
+import Knob, { SimpleSkin }  from "./";
+<Knob><SimpleSkin /></Knob>
+
 ```
