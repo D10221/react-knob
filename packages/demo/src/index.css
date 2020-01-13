@@ -130,3 +130,6 @@ footer div a {
 .red-labels {
   stroke: lightyellow !important;
 }
+.red-dial {
+  fill: red !important;
+}

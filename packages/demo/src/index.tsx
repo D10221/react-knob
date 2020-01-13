@@ -18,7 +18,7 @@ const Icon = ({ label = "", value = "", className = "icon" }) => (
   </span>
 );
 const BUFFER_SIZE = 300;
-const DEFAULT_SKIN = "svg:2";
+const DEFAULT_SKIN = "svg:1";
 const skins = ["css", "css:custom", "svg:1", "svg:2"];
 /**
  * 
@@ -38,7 +38,10 @@ function renderSkin({ skin = DEFAULT_SKIN, bufferSize = BUFFER_SIZE }) {
     case "svg:1":
       {
         // local sample: 
-        return <SkinSvgSimple />
+        return <SkinSvgSimple
+          // styles={{ dial: { fill: "white" } }}
+          // classes={{ dial: "red-dial"}}
+        />
       }
     case "svg:2":
       {
