@@ -65,7 +65,7 @@ function renderSkin({ skin = DEFAULT_SKIN, bufferSize = BUFFER_SIZE }) {
 const App = () => {
   const [{ value, dialogOpen, size, noOverlay, skin, bufferSize }, setState] = useState({
     value: 0,
-    dialogOpen: true,
+    dialogOpen: false,
     size: 65,
     noOverlay: false,
     skin: DEFAULT_SKIN,
