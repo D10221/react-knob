@@ -1,16 +1,15 @@
-import React, { SFC } from "react";
+import React, { FunctionComponent } from "react";
 /**
  * Applies style transform to children  
  */
-const Rotate: SFC<{ rotation: number; translateZ?: number | undefined }> = ({
-  rotation: rotate,
+const Rotate: FunctionComponent<{ rotation: number; translateZ?: number | undefined }> = ({
+  rotation,
   translateZ,
   children,
 }) => {
   const style: React.CSSProperties = {
-    transform: `rotate(${rotate}deg) translateZ(${translateZ || 0}px)`,
+    transform: `rotate(${rotation}deg) translateZ(${translateZ || 0}px)`,
     transformOrigin: "50% 50%",
-    transformBox: "fill-box",
   };
   return React.createElement(
     React.Fragment,
@@ -27,5 +26,4 @@ const Rotate: SFC<{ rotation: number; translateZ?: number | undefined }> = ({
       return child;
     }),
   );
-};
-export default Rotate;
+}; export default Rotate;

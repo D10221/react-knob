@@ -1,5 +1,5 @@
 export const BASE_HEIGHT = 100;
-export const BUFFER_SIZE = 360;
+export const DEFAULT_BUFFER_SIZE = 300;
 export const DEFAULT_SIZE = 65;
 export const DEFAULT_STEP = 1;
 export const DEFAULT_MAX = 100;
@@ -10,6 +10,6 @@ export const defaults = {
   min: DEFAULT_MIN,
   max: DEFAULT_MAX,
   step: DEFAULT_STEP,
-  size: BUFFER_SIZE as number | string,
-  bufferSize: BUFFER_SIZE,
+  size: DEFAULT_BUFFER_SIZE as number | string,
+  bufferSize: DEFAULT_BUFFER_SIZE,
 };

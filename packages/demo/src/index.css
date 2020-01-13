@@ -5,23 +5,6 @@
   --color4: #61dafb;
   --rolandColor: #f37d02;
 }
-.knob-circle-roland {
-  /* note: 
-    because the knob component injects css, 
-    it's css will be last 
-    on every render
-    and will have higher priority, 
-    to override color from 'main' css 
-    mak overriding rule as !important */
-  background-color:  var(--rolandColor) !important;
-  /* This is the default color */
-}
-.knob-circle-white {  
-  background-color:  var(--white) !important;
-}
-.knob-dial {
-  color: pink !important;
-}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -30,13 +13,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-color: var(--color1);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
+  background-color: var(--color1);
   color: var(--white);
   /* text-align: center; */
 }
@@ -71,6 +54,13 @@ button.clear {
   color: inherit;
   outline: none;
   border: none;
+}
+span[role="img"] {
+  color: inherit;
+}
+.numeral {
+  color: var(--color4) !important;
+  font-size: large;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -119,3 +109,21 @@ footer div a {
   flex-direction: row;
   align-items: center;
 }
+.knob-circle-roland {
+  /* note: 
+    because the knob component injects css, 
+    it's css will be last 
+    on every render
+    and will have higher priority, 
+    to override color from 'main' css 
+    mak overriding rule as !important */
+  background-color:  var(--rolandColor) !important;
+  /* This is the default color */
+}
+.knob-circle {  
+  /* custom */
+  background-color:  var(--white) !important;
+}
+/* 
+.knob-dial {  color: pink !important;} 
+*/

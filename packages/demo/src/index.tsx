@@ -1,32 +1,43 @@
 import React, { useState, ChangeEvent } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import Knob, { KnobSkin } from "@d10221/react-knob";
+import Knob, { KnobSkin, KnobSkinSvg } from "@d10221/react-knob";
 import * as serviceWorker from "./serviceWorker";
 import ClickAwayListener from "@d10221/react-click-away-listener";
 const repoUrl = "https://github.com/D10221/react-knob";
 const issuesUrl = "https://github.com/D10221/react-knob/issues";
-
+const Icon = ({ label = "", value = "", className = "icon" }) => (
+  <span
+    className={className}
+    role="img"
+    aria-label={label || ""}
+    aria-hidden={!Boolean(label)}
+  >
+    {value}
+  </span>
+);
 const App = () => {
-  const [{ value, dialogOpen, size, noOverlay }, setState] = useState({
+  const [{ value, dialogOpen, size, noOverlay, skin, bufferSize }, setState] = useState({
     value: 0,
-    dialogOpen: false,
+    dialogOpen: true,
     size: 65,
     noOverlay: false,
+    skin: "svg",
+    bufferSize: 300,
   });
   function changeValue(value: number) {
     if (value < 0) return;
     if (value > 100) return;
-    setState({ value, dialogOpen, size, noOverlay });
+    setState({ value, dialogOpen, size, noOverlay, skin, bufferSize });
   }
   function handleInputValueChanged(e: ChangeEvent<HTMLInputElement>) {
     changeValue(e.target.valueAsNumber);
   }
   function handleDialogOpen(open: boolean) {
-    return () => setState({ value, dialogOpen: open, size, noOverlay });
+    return () => setState({ value, dialogOpen: open, size, noOverlay, skin, bufferSize });
   }
   function handleSizeChanged(e: ChangeEvent<HTMLInputElement>) {
-    setState({ value, dialogOpen, size: e.target.valueAsNumber, noOverlay });
+    setState({ value, dialogOpen, size: e.target.valueAsNumber, noOverlay, skin, bufferSize });
   }
   function onNoOverlayChanged(e: ChangeEvent<HTMLInputElement>) {
     setState({
@@ -34,7 +45,31 @@ const App = () => {
       dialogOpen,
       noOverlay: !e.target.checked,
       size,
+      skin,
+      bufferSize
     });
+  }
+  function handleChangeSkin(e: React.MouseEvent<HTMLButtonElement>) {
+    setState({
+      value,
+      dialogOpen,
+      noOverlay,
+      size,
+      bufferSize,
+      skin: e.currentTarget.value
+    })
+  }
+  function renderSkin(skin: string) {
+    switch (skin) {
+      case "custom": return <KnobSkin
+        /* circleClass:optional */
+        circleClass={"knob-circle"}
+        /* dialClass:optional */
+        // dialClass={"knob-dial"}
+      />
+      case "svg": return <KnobSkinSvg bufferSize={bufferSize} />
+      default: return null; //default skin
+    }
   }
   function render() {
     return (
@@ -44,9 +79,7 @@ const App = () => {
             React Knob
           </a>
           <button className="clear" onClick={handleDialogOpen(true)}>
-            <span role="img" aria-label="Feedback">
-              {"⚙"}
-            </span>
+            <Icon value="⚙" label="Settings" />
           </button>
         </header>
         <main>
@@ -57,16 +90,11 @@ const App = () => {
             min={0}
             max={100}
             step={1}
-            bufferSize={300}
+            bufferSize={bufferSize}
             noOverlay={noOverlay}
           >
             {/* Children are Optional: defaults to 'KnobSkin' */}
-            <KnobSkin
-              /* circleClass:optional */
-              circleClass={"knob-circle-roland"}
-              /* dialClass:optional */
-              dialClass={"knob-dial"}
-            />
+            {renderSkin(skin)}
           </Knob>
           <input
             aria-label="knob value"
@@ -79,9 +107,7 @@ const App = () => {
         </main>
         <footer>
           <div>
-            <span role="img" aria-label="Feedback">
-              {"💬"}
-            </span>
+            <Icon value="💬" label="Feedback" />
             <a href={issuesUrl}>Feedback</a>
           </div>
         </footer>
@@ -106,6 +132,13 @@ const App = () => {
                   checked={!noOverlay}
                   onChange={onNoOverlayChanged}
                 />
+              </div>
+              <div className="row">
+                <label>Skin</label>
+                {["default", "custom", "svg"].map(skin => (
+                  <button key={`${skin}`} className="clear" onClick={handleChangeSkin} value={skin}>
+                    <Icon value={`${skin}`} className={"numeral"} />
+                  </button>))}
               </div>
             </div>
           </dialog>

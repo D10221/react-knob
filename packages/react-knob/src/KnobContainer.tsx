@@ -2,7 +2,8 @@ import React, { FunctionComponent } from "react";
 import classNames from "./classNames";
 import useStyle from "./react-css";
 import { DEFAULT_SIZE } from "./defaults";
-
+import randomName from "./randomName";
+const cssName = randomName();
 export type KnobContainerProps = Partial<
   React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 > & {
@@ -35,7 +36,7 @@ const KnobContainer: FunctionComponent<KnobContainerProps> = ({
         width: size,
         height: size,
       }}
-      className={classNames(useStyle(cssclass), className)}
+      className={classNames(useStyle(cssclass, cssName), className)}
     >
       {React.Children.map(children, (c=>{
         if(React.isValidElement(c)){

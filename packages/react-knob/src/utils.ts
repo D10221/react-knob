@@ -36,3 +36,7 @@ export function getRotation({
 /** */
 export const ownerDocument = (node?: Element | Text | null | undefined) =>
   (node && node.ownerDocument) || document;
+/** */  
+export function round(n: number, decimals?: number) {
+  return parseFloat(n.toFixed(decimals));
+}
