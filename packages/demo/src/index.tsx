@@ -10,7 +10,7 @@ const issuesUrl = "https://github.com/D10221/react-knob/issues";
 const App = () => {
   const [{ value, dialogOpen, size, noOverlay }, setState] = useState({
     value: 0,
-    dialogOpen: true,
+    dialogOpen: false,
     size: 65,
     noOverlay: false,
   });
