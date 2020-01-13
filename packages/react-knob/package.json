@@ -1,6 +1,6 @@
 {
   "name": "@d10221/react-knob",
-  "version": "1.0.0-beta.1",  
+  "version": "1.0.0-beta.2",  
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "author": "<d10221@protonmail.com>",

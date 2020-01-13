@@ -3,7 +3,7 @@ import KnobContainer, { KnobContainerProps } from "./KnobContainer";
 import Rotate from "./rotate";
 import PointerHandler from "./PointerHandler";
 import { getRotation } from "./utils";
-import { KnobSkin } from "./KnobSkin";
+import KnobSkin from "./KnobSkin";
 import {
   DEFAULT_SIZE,
   DEFAULT_STEP,
@@ -25,13 +25,15 @@ const Knob = ({
   size = DEFAULT_SIZE,
   bufferSize = 360,
   //
+  noOverlay = false,
+  // ...
   onChange: _onchange = undefined as OnChange | undefined,
   children = undefined as React.ReactNode | undefined,
   containerProps = undefined as Omit<KnobContainerProps, "size"> | undefined,
 }) => {
   const onChange: OnChange = val =>
     typeof _onchange === "function" && val !== value && _onchange(val);
-    
+
   const { state, move, done, start } = useKnobState(onChange);
   const { cursorPos, knobCenter, scale, topPosition } = state;
   const onPointerDown = PointerHandler({
@@ -52,7 +54,7 @@ const Knob = ({
       <Rotate rotation={getRotation({ value, min, max, bufferSize })}>
         {children || <KnobSkin />}
       </Rotate>
-      {!topPosition ? null : (
+      {noOverlay || !topPosition ? null : (
         <KnobOverlay
           cursorPos={cursorPos}
           knobCenter={knobCenter}
