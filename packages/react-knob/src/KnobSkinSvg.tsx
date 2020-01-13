@@ -2,13 +2,19 @@ import React, { SVGProps, useState, FunctionComponent } from "react";
 import { round } from "./utils";
 import Rotate from "./rotate";
 
-const SvgSkin: FunctionComponent<{ className?: string | undefined, bufferSize: number }> = ({ className, bufferSize }) => {
+const SvgSkin: FunctionComponent<SVGProps<SVGSVGElement> & {
+    className?: string | undefined,
+    bufferSize: number,
+}> = ({ className, bufferSize, style, ...props }) => {
     return <svg className={""}
         viewBox="0 0 100 100"
         focusable={"false"}
         style={{
+            // HAVE! to transfer down the transform
+            ...style,
             touchAction: "none"
         }}
+        {...props}
     >
         <g>
             <circle

@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import Knob, { KnobSkin, KnobSkinSvg } from "@d10221/react-knob";
+import { Knob, CssSkin, SvgSkin, SimpleSkin } from "@d10221/react-knob";
 import * as serviceWorker from "./serviceWorker";
 import ClickAwayListener from "@d10221/react-click-away-listener";
 const repoUrl = "https://github.com/D10221/react-knob";
@@ -16,13 +16,14 @@ const Icon = ({ label = "", value = "", className = "icon" }) => (
     {value}
   </span>
 );
+
 const App = () => {
   const [{ value, dialogOpen, size, noOverlay, skin, bufferSize }, setState] = useState({
     value: 0,
     dialogOpen: true,
     size: 65,
     noOverlay: false,
-    skin: "svg",
+    skin: "svg:1",
     bufferSize: 300,
   });
   function changeValue(value: number) {
@@ -59,15 +60,29 @@ const App = () => {
       skin: e.currentTarget.value
     })
   }
+  const skins = ["css", "css:custom", "svg:1", "svg:2"];
   function renderSkin(skin: string) {
     switch (skin) {
-      case "custom": return <KnobSkin
-        /* circleClass:optional */
-        circleClass={"knob-circle"}
-        /* dialClass:optional */
+      case "css": {     
+        // No Class   
+        return <CssSkin  />
+      }
+      case "css:custom": {
+        // circleClass:optional
+        // dialClass:optional
         // dialClass={"knob-dial"}
-      />
-      case "svg": return <KnobSkinSvg bufferSize={bufferSize} />
+        return <CssSkin circleClass={"knob-circle"} />
+      }
+      case "svg:1":
+        {
+          // local sample: 
+          return <SimpleSkin />
+        }
+      case "svg:2":
+        {
+          // inbuild svg?
+          return <SvgSkin bufferSize={bufferSize} />
+        }
       default: return null; //default skin
     }
   }
@@ -135,7 +150,7 @@ const App = () => {
               </div>
               <div className="row">
                 <label>Skin</label>
-                {["default", "custom", "svg"].map(skin => (
+                {skins.map(skin => (
                   <button key={`${skin}`} className="clear" onClick={handleChangeSkin} value={skin}>
                     <Icon value={`${skin}`} className={"numeral"} />
                   </button>))}

@@ -31,9 +31,10 @@ const Knob = ({
   children = undefined as React.ReactNode | undefined,
   containerProps = undefined as Omit<KnobContainerProps, "size"> | undefined,
 }) => {
+
   const onChange: OnChange = val =>
     typeof _onchange === "function" && val !== value && _onchange(val);
-
+    
   const { state, move, done, start } = useKnobState(onChange);
   const { cursorPos, knobCenter, scale, topPosition } = state;
   const onPointerDown = PointerHandler({
@@ -45,13 +46,14 @@ const Knob = ({
     onDown: start,
     onUp: done,
   });
+  const rotation = getRotation({ value, min, max, bufferSize });
   return (
     <KnobContainer
       size={size}
       onPointerDown={onPointerDown}
       {...containerProps}
     >
-      <Rotate rotation={getRotation({ value, min, max, bufferSize })}>
+      <Rotate rotation={rotation}>
         {children || <KnobSkin />}
       </Rotate>
       {noOverlay || !topPosition ? null : (
