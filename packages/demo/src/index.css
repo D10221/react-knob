@@ -127,3 +127,6 @@ footer div a {
 /* 
 .knob-dial {  color: pink !important;} 
 */
+.red-labels {
+  stroke: lightyellow !important;
+}

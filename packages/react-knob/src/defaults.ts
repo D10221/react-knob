@@ -5,6 +5,12 @@ export const DEFAULT_STEP = 1;
 export const DEFAULT_MAX = 100;
 export const DEFAULT_VALUE = 0;
 export const DEFAULT_MIN = 1;
+/**
+ * Roland color
+ */
+export const DEFAULT_COLOR = "#f37d02";
+export const DEFAULT_BORDER_COLOR = "black";
+/** */
 export const defaults = {
   value: DEFAULT_VALUE,
   min: DEFAULT_MIN,

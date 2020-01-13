@@ -1,4 +1,4 @@
 export { default } from "./Knob";
-export { default as CssSkin } from "./KnobSkin";
-export { default as SvgSkin } from "./KnobSkinSvg";
-export { default as SimpleSkin}  from "./KnobSkinSvgSimple";
+export { default as SkinCss } from "./SkinCss";
+export { default as SkinSvg } from "./SkinSvg";
+export { default as SkinSvgSimple}  from "./SkinSvgSimple";

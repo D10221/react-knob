@@ -1,11 +1,12 @@
 import React, { useState, ChangeEvent } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import Knob, { CssSkin, SvgSkin, SimpleSkin } from "@d10221/react-knob";
+import Knob, { SkinCss, SkinSvg, SkinSvgSimple } from "@d10221/react-knob";
 import * as serviceWorker from "./serviceWorker";
 import ClickAwayListener from "@d10221/react-click-away-listener";
 const repoUrl = "https://github.com/D10221/react-knob";
 const issuesUrl = "https://github.com/D10221/react-knob/issues";
+/** */
 const Icon = ({ label = "", value = "", className = "icon" }) => (
   <span
     className={className}
@@ -16,15 +17,56 @@ const Icon = ({ label = "", value = "", className = "icon" }) => (
     {value}
   </span>
 );
-
+const BUFFER_SIZE = 300;
+const DEFAULT_SKIN = "svg:2";
+const skins = ["css", "css:custom", "svg:1", "svg:2"];
+/**
+ * 
+ */
+function renderSkin({ skin = DEFAULT_SKIN, bufferSize = BUFFER_SIZE }) {
+  switch (skin) {
+    case "css": {
+      // No Class   
+      return <SkinCss />
+    }
+    case "css:custom": {
+      // circleClass:optional
+      // dialClass:optional
+      // dialClass={"knob-dial"}
+      return <SkinCss circleClass={"knob-circle"} />
+    }
+    case "svg:1":
+      {
+        // local sample: 
+        return <SkinSvgSimple />
+      }
+    case "svg:2":
+      {
+        // inbuild svg?
+        return <SkinSvg
+          bufferSize={bufferSize}
+          classes={{
+            // labels: "red-labels"
+          }}
+          styles={{
+            labels: {
+              // display: "none"
+            }
+          }}
+        />
+      }
+    default: return null; //default skin
+  }
+}
+/** */
 const App = () => {
   const [{ value, dialogOpen, size, noOverlay, skin, bufferSize }, setState] = useState({
     value: 0,
     dialogOpen: true,
     size: 65,
     noOverlay: false,
-    skin: "svg:1",
-    bufferSize: 300,
+    skin: DEFAULT_SKIN,
+    bufferSize: BUFFER_SIZE,
   });
   function changeValue(value: number) {
     if (value < 0) return;
@@ -60,32 +102,7 @@ const App = () => {
       skin: e.currentTarget.value
     })
   }
-  const skins = ["css", "css:custom", "svg:1", "svg:2"];
-  function renderSkin(skin: string) {
-    switch (skin) {
-      case "css": {     
-        // No Class   
-        return <CssSkin  />
-      }
-      case "css:custom": {
-        // circleClass:optional
-        // dialClass:optional
-        // dialClass={"knob-dial"}
-        return <CssSkin circleClass={"knob-circle"} />
-      }
-      case "svg:1":
-        {
-          // local sample: 
-          return <SimpleSkin />
-        }
-      case "svg:2":
-        {
-          // inbuild svg?
-          return <SvgSkin bufferSize={bufferSize} />
-        }
-      default: return null; //default skin
-    }
-  }
+  /** */
   function render() {
     return (
       <>
@@ -109,7 +126,7 @@ const App = () => {
             noOverlay={noOverlay}
           >
             {/* Children are Optional: defaults to 'KnobSkin' */}
-            {renderSkin(skin)}
+            {renderSkin({ skin, bufferSize })}
           </Knob>
           <input
             aria-label="knob value"

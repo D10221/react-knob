@@ -3,7 +3,7 @@ import KnobContainer, { KnobContainerProps } from "./KnobContainer";
 import Rotate from "./rotate";
 import PointerHandler from "./PointerHandler";
 import { getRotation } from "./utils";
-import KnobSkin from "./KnobSkin";
+import KnobSkin from "./SkinCss";
 import {
   DEFAULT_SIZE,
   DEFAULT_STEP,

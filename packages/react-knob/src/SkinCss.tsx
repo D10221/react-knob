@@ -2,10 +2,8 @@ import React, { FunctionComponent } from "react";
 import useStyle from "./react-css";
 import classNames from "./classNames";
 import randomName from "./randomName";
-
-export const DEFAULT_BORDER_COLOR = "black";
-export const DEFAULT_COLOR = "#F37D02";
-
+import { DEFAULT_BORDER_COLOR, DEFAULT_COLOR } from "./defaults";
+/** */
 type CircleProps = Partial<
   React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 > & {

@@ -1,18 +1,57 @@
 import React, { SVGProps, useState, FunctionComponent } from "react";
 import { round } from "./utils";
 import Rotate from "./rotate";
-
+import { DEFAULT_BUFFER_SIZE } from "./defaults";
+import randomName from "./randomName";
+import classNames from "./classNames";
+import useStyle from "./react-css";
+/** */
+const DEFAULT_CLASSES = {
+    outter: undefined,
+    inner: undefined,
+    labels: undefined
+}
+/** */
+const DEFAULT_STYLES = {
+    outter: undefined,
+    inner: undefined,
+    labels: undefined,
+}
+/** cached  */
+const outterCicleClass = randomName();
+/** cached  */
+const innerCircleClass = randomName();
+/** cached  */
+const labelClass = randomName();
+/**
+ * @description fancy svg skin 
+ */
 const SvgSkin: FunctionComponent<SVGProps<SVGSVGElement> & {
-    className?: string | undefined,
     bufferSize: number,
-}> = ({ className, bufferSize, style, ...props }) => {
-    return <svg className={""}
+    classes?: {
+        outter?: string | undefined,
+        inner?: string | undefined,
+        labels?: string | undefined
+    },
+    styles?: {
+        outter?: React.CSSProperties | undefined,
+        inner?: React.CSSProperties | undefined
+        labels?: React.CSSProperties | undefined
+    }
+}> = ({ className, bufferSize = DEFAULT_BUFFER_SIZE, style, styles = DEFAULT_STYLES, classes = DEFAULT_CLASSES, ...props }) => {
+    useStyle(`fill: black`, outterCicleClass);
+    useStyle(`fill: darkgrey`, innerCircleClass);
+    useStyle(`    
+    stroke: whitesmoke;
+    font-size: .8rem;
+    `, labelClass);
+    return <svg className={className}
         viewBox="0 0 100 100"
         focusable={"false"}
         style={{
             // HAVE! to transfer down the transform
             ...style,
-            touchAction: "none"
+            touchAction: "none",
         }}
         {...props}
     >
@@ -21,29 +60,22 @@ const SvgSkin: FunctionComponent<SVGProps<SVGSVGElement> & {
                 cx="50%"
                 cy="50%"
                 r={"47%"}
-                style={{
-                    // filter: "url(#drop-shadow)"
-                }}
+                className={classNames(outterCicleClass, classes.outter)}
+                style={{ ...styles.outter }}
             />
             <circle
                 cx="50%"
                 cy="50%"
                 r={"25%"}
-                style={{
-                    // filter: `url(#inner-drop-shadow${active ? "-active" : ""})`,
-                    fill: "darkgrey"
-                }}
+                className={classNames(innerCircleClass, classes.inner)}
+                style={{ ...styles.inner }}
             />
             <Labels
                 rotation={bufferSize}
                 labels={ZERO_TO_TEN}
                 y="12.5"
-                style={{
-                    // filter: "url(#text-shadow)",
-                    fill: "pink",
-                    stroke: "yellow",
-                    fontSize: ".8rem"
-                }}
+                className={classNames(labelClass, classes.labels)}
+                style={{ ...styles.labels }}
             />
         </g>
     </svg>

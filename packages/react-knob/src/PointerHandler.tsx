@@ -19,8 +19,10 @@ type OnUp = () => any;
 type OnDown = (x: {
   clientY: number,
   rect: number[],
-})=> any;
-/** */
+}) => any;
+/** 
+ * Creates an event handler with inbuilt logic
+ */
 type PointerHandler = (p: {
   value: number;
   min: number;
@@ -30,8 +32,8 @@ type PointerHandler = (p: {
   onUp?: OnUp;
   onDown?: OnDown;
 }) => (
-  e: PointerEvent | MouseEvent | React.MouseEvent | React.PointerEvent,
-) => any;
+    e: PointerEvent | MouseEvent | React.MouseEvent | React.PointerEvent,
+  ) => any;
 /**
  * TODO: move logic out?, leave just the events ? 
  * @param config Creates parent document bound pointer events handler
@@ -45,12 +47,12 @@ const PointerHandler: PointerHandler = ({
   onUp,
   onDown
 }) => ev => {
-  ev.preventDefault();  
+  ev.preventDefault();
   const { currentTarget } = ev;
   if (!isHtmlElement(currentTarget)) return;
   const startY = ev.clientY; //hold initial Y value  
   const knobRect = (currentTarget as any).getBoundingClientRect();
-  if(typeof onDown === "function") onDown({
+  if (typeof onDown === "function") onDown({
     // TODO: opportunity to move logic up
     clientY: ev.clientY,
     rect: knobRect
