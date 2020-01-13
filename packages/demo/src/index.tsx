@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import { Knob, CssSkin, SvgSkin, SimpleSkin } from "@d10221/react-knob";
+import Knob, { CssSkin, SvgSkin, SimpleSkin } from "@d10221/react-knob";
 import * as serviceWorker from "./serviceWorker";
 import ClickAwayListener from "@d10221/react-click-away-listener";
 const repoUrl = "https://github.com/D10221/react-knob";

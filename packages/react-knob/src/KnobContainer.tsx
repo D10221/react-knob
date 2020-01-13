@@ -20,7 +20,10 @@ const cssclass = `
   align-items: center;
   align-content: center;  
     `;
-/** */
+/** 
+ * @description sets overall size removes touch action from inner children
+ * 
+*/
 const KnobContainer: FunctionComponent<KnobContainerProps> = ({
   children,
   size = DEFAULT_SIZE,
@@ -38,15 +41,17 @@ const KnobContainer: FunctionComponent<KnobContainerProps> = ({
       }}
       className={classNames(useStyle(cssclass, cssName), className)}
     >
-      {React.Children.map(children, (c=>{
-        if(React.isValidElement(c)){
-          const {style, ...p } = c.props;          
-          return React.cloneElement(c, { ...p, style: {
-            ...style,
-            // disable children 'clicks'
-            touchAction: "none",
-            pointerEvents: "none",            
-          } as React.CSSProperties})
+      {React.Children.map(children, (c => {
+        if (React.isValidElement(c)) {
+          const { style, ...p } = c.props;
+          return React.cloneElement(c, {
+            ...p, style: {
+              ...style,
+              // disable children 'clicks'
+              touchAction: "none",
+              pointerEvents: "none",
+            } as React.CSSProperties
+          })
         }
         return c;
       }))}
