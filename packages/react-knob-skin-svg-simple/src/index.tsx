@@ -1,132 +1,56 @@
-import { classNames, randomName, useStyle } from "@d10221/react-css";
-import Rotate from "@d10221/react-rotate";
-import React, { FunctionComponent, SVGProps, useState } from "react";
-
-const DEFAULT_BUFFER_SIZE = 300;
-/** */
-const DEFAULT_CLASSES = {
-  outter: undefined,
-  inner: undefined,
-  labels: undefined
-}
-/** */
-const DEFAULT_STYLES = {
-  outter: undefined,
-  inner: undefined,
-  labels: undefined,
-}
-/** cached  */
-const outterCicleClass = randomName();
-/** cached  */
-const innerCircleClass = randomName();
-/** cached  */
-const labelClass = randomName();
+import React, { CSSProperties } from "react";
+import { useStyle, classNames, randomName } from "@d10221/react-css";
 /**
- * @description fancy svg skin 
+ * Roland color
  */
-const SvgSkin: FunctionComponent<SVGProps<SVGSVGElement> & {
-  bufferSize: number,
+export const DEFAULT_COLOR = "#f37d02";
+
+const circleClass = randomName();
+const dialClass = randomName();
+const DEFAULT_STYLES = {
+  circle: undefined,
+  dial: undefined
+}
+const DEFAULT_CLASSES = {
+  circle: undefined,
+  dial: undefined
+}
+/**
+ * 
+ */
+export default function SimpleSkin(props: React.SVGProps<SVGSVGElement> & {
   classes?: {
-    outter?: string | undefined,
-    inner?: string | undefined,
-    labels?: string | undefined
+    circle?: string | undefined,
+    dial?: string | undefined,
   },
   styles?: {
-    outter?: React.CSSProperties | undefined,
-    inner?: React.CSSProperties | undefined
-    labels?: React.CSSProperties | undefined
+    circle?: CSSProperties | undefined,
+    dial?: CSSProperties | undefined,
   }
-}> = ({ className, bufferSize = DEFAULT_BUFFER_SIZE, style, styles = DEFAULT_STYLES, classes = DEFAULT_CLASSES, ...props }) => {
-  useStyle(`fill: black`, outterCicleClass);
-  useStyle(`fill: darkgrey`, innerCircleClass);
-  useStyle(`    
-    stroke: whitesmoke;
-    font-size: .8rem;
-    `, labelClass);
-  return <svg className={className}
+}) {
+  const { className, style, styles = DEFAULT_STYLES, classes = DEFAULT_CLASSES, ...rest } = props;
+  useStyle(`fill: ${DEFAULT_COLOR}; stroke: black; stroke-width: 9%`, circleClass);
+  useStyle(`width: 8%;height: 35%; fill: black;`, dialClass);
+  return <svg
     viewBox="0 0 100 100"
     focusable={"false"}
+    className={className}
     style={{
-      // HAVE! to transfer down the transform
+      // It needs to forward down the style: transform
       ...style,
-      touchAction: "none",
+      touchAction: "none"
     }}
-    {...props}
-  >
-    <g>
-      <circle
-        cx="50%"
-        cy="50%"
-        r={"47%"}
-        className={classNames(outterCicleClass, classes.outter)}
-        style={{ ...styles.outter }}
-      />
-      <circle
-        cx="50%"
-        cy="50%"
-        r={"25%"}
-        className={classNames(innerCircleClass, classes.inner)}
-        style={{ ...styles.inner }}
-      />
-      <Labels
-        rotation={bufferSize}
-        labels={ZERO_TO_TEN}
-        y="12.5"
-        className={classNames(labelClass, classes.labels)}
-        style={{ ...styles.labels }}
-      />
-    </g>
+    {...rest}>
+    <circle
+      cx="50%"
+      cy="50%"
+      r={"47%"}
+      className={classNames(circleClass, classes.dial)}
+      style={styles.circle}
+    />
+    <rect
+      x="48%" y="4%"
+      className={classNames(dialClass, classes.dial)}
+      style={styles.dial} />
   </svg>
-}
-export default SvgSkin;
-
-/** */
-const ZERO_TO_TEN = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-/** */
-const TextLabel: FunctionComponent<React.SVGProps<SVGTextElement>> = ({
-  children,
-  ...props
-}) => {
-  return (
-    <svg
-      viewBox="0 0 100 100"
-      style={{ pointerEvents: "none", touchAction: "none" }}
-    >
-      <text dominantBaseline="middle" textAnchor="middle" {...props}>
-        {children}
-      </text>
-    </svg>
-  );
-};
-/**
- *
- */
-const Labels: FunctionComponent<
-  SVGProps<SVGTextElement> & {
-    labels: any[];
-    rotation: number;
-  }
-> = ({ labels, rotation, id, ...props }) => {
-  labels = labels && labels.length ? labels : [];
-  const deg = round((rotation) / (labels.length - 1), 2);
-  const [children, setChildren] = useState([] as any);
-  if (!children.length)
-    requestAnimationFrame(() => {
-      setChildren(labels!.map((x, index) => {
-        return <Rotate rotation={index * deg * -1} key={`${id}-label-${index}`}>
-          <TextLabel
-            id={`${id}-label-${index}`}
-            x={"50%"}
-            y={"10%"}
-            {...props}
-            children={x}
-          />
-        </Rotate>
-      }))
-    });
-  return children;
-};
-
-function round(n: number, decimals?: number) {
-  return parseFloat(n.toFixed(decimals));
 }
