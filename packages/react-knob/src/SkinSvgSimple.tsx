@@ -14,7 +14,7 @@ const DEFAULT_CLASSES = {
   dial: undefined
 }
 /**
- * It needs to forward down the style: transform
+ * 
  */
 export default function SimpleSkin(props: React.SVGProps<SVGSVGElement> & {
   classes?: {
@@ -34,6 +34,7 @@ export default function SimpleSkin(props: React.SVGProps<SVGSVGElement> & {
     focusable={"false"}
     className={className}
     style={{
+      // It needs to forward down the style: transform
       ...style,
       touchAction: "none"
     }}
