@@ -1,8 +1,10 @@
 import React, { FunctionComponent } from "react";
-import useStyle from "./react-css";
-import classNames from "./classNames";
-import randomName from "./randomName";
-import { DEFAULT_BORDER_COLOR, DEFAULT_COLOR } from "./defaults";
+import { useStyle, randomName, classNames } from "@d10221/react-css";
+/**
+ * Roland color
+ */
+const DEFAULT_COLOR = "#f37d02";
+const DEFAULT_BORDER_COLOR = "black";
 /** */
 type CircleProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
   borderColor?: string;

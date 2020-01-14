@@ -1,19 +1,12 @@
+import KnobSkin from "@d10221/react-knob-skin-svg-simple";
+import Rotate from "@d10221/react-rotate";
 import React, { FunctionComponent } from "react";
+import { DEFAULT_BUFFER_SIZE, DEFAULT_MAX, DEFAULT_MIN, DEFAULT_SIZE, DEFAULT_STEP, DEFAULT_VALUE } from "./defaults";
 import KnobContainer, { KnobContainerProps } from "./KnobContainer";
-import Rotate from "./rotate";
-import PointerHandler from "./PointerHandler";
-import { getRotation } from "./utils";
-import KnobSkin from "./SkinSvgSimple";
-import {
-  DEFAULT_SIZE,
-  DEFAULT_STEP,
-  DEFAULT_MAX,
-  DEFAULT_MIN,
-  DEFAULT_VALUE,
-  DEFAULT_BUFFER_SIZE
-} from "./defaults";
 import KnobOverlay from "./KnobOverlay";
 import useKnobState from "./KnobState";
+import PointerHandler from "./PointerHandler";
+import { getRotation } from "./utils";
 type OnChange = (value: number) => any;
 /**
  * Creates a knob with default skin if no children provided
@@ -96,7 +89,7 @@ const Knob: FunctionComponent<{
         {...containerProps}
       >
         <Rotate rotation={rotation}>
-          {children || <KnobSkin />}
+          {children || <KnobSkin bufferSize={bufferSize}/>}
         </Rotate>
         {noOverlay || !topPosition ? null : (
           <KnobOverlay

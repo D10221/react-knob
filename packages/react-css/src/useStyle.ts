@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import css from "./css";
+import css from "./createStyle";
 import randomName from "./randomName";
 /** */
 export default function useStyle(style: string, className = randomName()) {  

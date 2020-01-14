@@ -26,4 +26,5 @@ const Rotate: FunctionComponent<{ rotation: number; translateZ?: number | undefi
       return child;
     }),
   );
-}; export default Rotate;
+}; 
+export default Rotate;

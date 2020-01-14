@@ -1,25 +1,22 @@
 {
-  "name": "@d10221/react-knob-skin-css",
+  "name": "@d10221/react-knob-skin-svg-simple",
   "private": true,
   "version": "1.0.0",
-  "main": "dist/index.js",
-  "umd:main": "dist/index.umd.js",
-  "module": "dist/index.esm.js",
+  "main": "build/index.js",
   "source": "src/index.tsx",
-  "types": "dist/index.d.ts",
+  "types": "build/index.d.ts",
   "author": "<d10221@protonmail.com>",
-  "description": "React Knob Skin (internal)",
+  "description": "React Knob Skin SVG simple (internal)",
   "repository": "https://github.com/D10221/react-knob.git",
   "homepage": "https://github.com/D10221/react-knob.git#readme",
   "bugs": "https://github.com/D10221/react-knob/issues",
   "license": "MIT",
   "scripts": {
-    "build": "microbundle",
+    "build": "rimraf build && tsc -p .",
     "test": "echo TODO: add jest, write tests",
-    "start": "microbundle --watch"
+    "start": "rimraf build && tsc -p . --watch"
   },
   "devDependencies": {
-    "microbundle": "^0.11.0",
     "rimraf": "^3.0.0",
     "typescript": "^3.7.4"
   },
@@ -29,19 +26,7 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  }, 
   "files": [    
     "dist/*",
     "src/*"
