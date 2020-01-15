@@ -14,9 +14,9 @@
   "bugs": "https://github.com/D10221/react-knob/issues",
   "license": "MIT",
   "scripts": {
-    "build": "microbundle",
+    "build": "rimraf dist && microbundle",
     "test": "echo TODO: add jest, write tests",
-    "start": "microbundle --watch"
+    "start": "rimraf dist && microbundle --watch"
   },
   "devDependencies": {
     "microbundle": "^0.11.0",
