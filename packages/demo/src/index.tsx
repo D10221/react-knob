@@ -5,7 +5,6 @@ import SkinSvg from "@d10221/react-knob-skin-svg"; // local: module
 import SkinSvgSimple from "@d10221/react-knob-skin-svg-simple"; // local:module
 import React, { ChangeEvent, useState } from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 const repoUrl = "https://github.com/D10221/react-knob";
 const issuesUrl = "https://github.com/D10221/react-knob/issues";
