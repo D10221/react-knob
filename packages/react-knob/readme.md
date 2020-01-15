@@ -1,19 +1,18 @@
 React Knob (WIP)
 
-
 API:
 
 ```javascript
-    import Knob from "./"
+import Knob from "./";
 ```
 
-# Knob: 
- 
- * Creates a knob with default skin if no children provided
- * Holds internal state
- * Applies rotation via style.transform property
- * Gate for options
- * Controls overlay visibility  
+# Knob
+
+- Creates a knob with default [skin](../react-knob-skin-svg-simple) if no children provided
+- Holds internal state
+- Applies rotation via style.transform property
+- Gate for options
+- Controls overlay visibility
 
 ```typescript
 /**
@@ -34,8 +33,8 @@ const Knob: FunctionComponent<{
   step: number;
   /**
    * @description will be applied as 'width' and 'height' equally as style property
-   * @optional   
-   * @default 65px   
+   * @optional
+   * @default 65px
    * */
   size?: number | string | undefined;
   /**
@@ -48,20 +47,20 @@ const Knob: FunctionComponent<{
   noOverlay?: boolean | undefined;
   /**
    * @optional
-   * @description callback with the new value   
+   * @description callback with the new value
    */
   onChange?: OnChange | undefined;
   /**
    * @description allows override this component main container props see './KnobContainer'
-   * 
+   *
    */
-  containerProps?: Omit<KnobContainerProps, "size"> | undefined | undefined
-}>
+  containerProps?: Omit<KnobContainerProps, "size"> | undefined | undefined;
+}>;
 ```
 
-Skins: 
+Skins:
 
-The only skin requirement is to accept and apply the custom component the style mutation applied by [`<Rotate />`](./src/rotate.ts)
+The only skin requirement is to accept and apply the custom component the style mutation applied by [`<Rotate />`](../react-rotate/src/index.ts)
 
 Sample Skin:
 
@@ -76,25 +75,25 @@ export default function SimpleSkin(props: React.SVGProps<SVGSVGElement>) {
     focusable={"false"}
     style={{
        // you have to accept the style mutation
-       // for this to rotate       
+       // for this to rotate
       ...style,
       touchAction: "none"
     }}>
     <circle
       cx="50%"
       cy="50%"
-      r={"47%"}     
+      r={"47%"}
     />
     <rect x="48%" y="4%" width="5%" height="33%" fill="white" />
   </svg>
 ```
 
-Using inbuilt Skins:   
+Build:
 
-Replace default children 
+The following imports are 'local',
+It is 'shared code' and it should get bundled.
 
 ```javascript
-import Knob, { SimpleSkin }  from "./";
-<Knob><SimpleSkin /></Knob>
-
+import KnobSkin from "@d10221/react-knob-skin-svg-simple";
+import Rotate from "@d10221/react-rotate";
 ```

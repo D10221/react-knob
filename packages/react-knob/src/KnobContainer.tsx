@@ -1,25 +1,11 @@
 import React, { FunctionComponent } from "react";
-import classNames from "./classNames";
-import useStyle from "./react-css";
 import { DEFAULT_SIZE } from "./defaults";
-import randomName from "./randomName";
-const cssName = randomName();
 export type KnobContainerProps = Partial<
   React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 > & {
   size: number | string;
 };
-const cssclass = `
-  margin:0;
-  padding: 0;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  justify-items: center;
-  align-items: center;
-  align-content: center;  
-    `;
+
 /** 
  * @description sets overall size removes touch action from inner children
  * 
@@ -35,21 +21,21 @@ const KnobContainer: FunctionComponent<KnobContainerProps> = ({
     <div
       {...props}
       style={{
-        ...style,
-        width: size,
+        width: size, // it should just work
         height: size,
+        ...style, //but, allow override
       }}
-      className={classNames(useStyle(cssclass, cssName), className)}
+      className={className}
     >
       {React.Children.map(children, (c => {
         if (React.isValidElement(c)) {
           const { style, ...p } = c.props;
           return React.cloneElement(c, {
             ...p, style: {
-              ...style,
               // disable children 'clicks'
-              touchAction: "none",
+              touchAction: "none", // it should just work
               pointerEvents: "none",
+              ...style, // but, allow override
             } as React.CSSProperties
           })
         }

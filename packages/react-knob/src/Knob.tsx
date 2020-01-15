@@ -1,5 +1,5 @@
-import KnobSkin from "@d10221/react-knob-skin-svg-simple";
-import Rotate from "@d10221/react-rotate";
+import KnobSkin from "@d10221/react-knob-skin-svg-simple"; //this should be bundled here!
+import Rotate from "@d10221/react-rotate"; //this should be bundled here!
 import React, { FunctionComponent } from "react";
 import { DEFAULT_BUFFER_SIZE, DEFAULT_MAX, DEFAULT_MIN, DEFAULT_SIZE, DEFAULT_STEP, DEFAULT_VALUE } from "./defaults";
 import KnobContainer, { KnobContainerProps } from "./KnobContainer";
@@ -89,7 +89,7 @@ const Knob: FunctionComponent<{
         {...containerProps}
       >
         <Rotate rotation={rotation}>
-          {children || <KnobSkin bufferSize={bufferSize}/>}
+          {children || <KnobSkin />}
         </Rotate>
         {noOverlay || !topPosition ? null : (
           <KnobOverlay
