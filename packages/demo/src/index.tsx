@@ -6,8 +6,14 @@ import SkinSvgSimple from "@d10221/react-knob-skin-svg-simple"; // local:module
 import React, { ChangeEvent, useState } from "react";
 import ReactDOM from "react-dom";
 import * as serviceWorker from "./serviceWorker";
+
 const repoUrl = "https://github.com/D10221/react-knob";
 const issuesUrl = "https://github.com/D10221/react-knob/issues";
+
+function round(n: number, decimals?: number) {
+  return parseFloat(n.toFixed(decimals));
+}
+
 /** */
 const Icon = ({ label = "", value = "", className = "icon" }) => (
   <span
@@ -25,7 +31,7 @@ const skins = [
   { key: "default", display: "default" },
   { key: "css:1", display: "css" },
   { key: "css:2", display: "css custom" },
-  { key: "svg:1", display: "svg fancy" },  
+  { key: "svg:1", display: "svg fancy" },
   { key: "svg:2", display: "svg custom #1" },
   { key: "svg:3", display: "svg custom #2" },
 ];
@@ -38,7 +44,7 @@ function renderSkin({ skin = DEFAULT_SKIN, bufferSize = BUFFER_SIZE }) {
       // No Class
       return <SkinCss />;
     }
-    case "css:2": {     
+    case "css:2": {
       return <SkinCss circleClass={"knob-circle"} />;
     }
     case "svg:1": {
@@ -86,23 +92,26 @@ const initialState = {
   overlay: true,
   skin: DEFAULT_SKIN,
   bufferSize: BUFFER_SIZE,
+  step: 1,
+  min: 0,
+  max: 100
 };
 /** */
 const App = () => {
   const [
-    { value, dialogOpen, size, overlay, skin, bufferSize },
+    { value, dialogOpen, size, overlay, skin, bufferSize, step, min, max },
     _setState,
   ] = useState(initialState);
   /** */
   function setState(update: Partial<typeof initialState>) {
     _setState({
-      value, dialogOpen, size, overlay, skin, bufferSize,
+      value, dialogOpen, size, overlay, skin, bufferSize, step, min, max,
       ...update,
     })
   }
   function onValueChanged(value: number) {
-    if (value < 0) return;
-    if (value > 100) return;
+    if (value < min) return;
+    if (value > max) return;
     setState({ value });
   }
   function onInputValueChanged(e: ChangeEvent<HTMLInputElement>) {
@@ -144,9 +153,9 @@ const App = () => {
             value={value}
             onChange={onValueChanged}
             size={size}
-            min={0}
-            max={100}
-            step={1}
+            min={min}
+            max={max}
+            step={step}
             bufferSize={bufferSize}
             overlay={overlay}
           >
@@ -158,8 +167,8 @@ const App = () => {
             type="number"
             value={value}
             onChange={onInputValueChanged}
-            min={0}
-            max={100}
+            min={min}
+            max={max}
           />
         </main>
         <footer>
@@ -203,6 +212,42 @@ const App = () => {
                   ))}
                 </select>
               </div>
+              <div className="row">
+                <label>Step ({step})</label>
+                <input
+                  id="step-range"
+                  type="range"
+                  min={0.5}
+                  max={round(max / 4)}
+                  step={0.5}
+                  value={step}
+                  onChange={e => setState({ step: e.target.valueAsNumber })}
+                />
+              </div>
+            </div>
+            <div className="row">
+              <label htmlFor="size-input-range">Min ({min})</label>
+              <input
+                id="min-range"
+                type="range"
+                min={0}
+                max={round(max / 4)}
+                step={1}
+                value={min}
+                onChange={e => setState({ min: e.target.valueAsNumber })}
+              />
+            </div>
+            <div className="row">
+              <label htmlFor="size-input-range">Max ({max})</label>
+              <input
+                id="max-range"
+                type="range"
+                min={round(max / 4)}
+                max={1000}
+                step={1}
+                value={max}
+                onChange={e => setState({ max: e.target.valueAsNumber })}
+              />
             </div>
           </dialog>
         </ClickAwayListener>
