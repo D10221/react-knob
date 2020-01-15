@@ -94,9 +94,6 @@ footer {
   flex-direction: row;
   justify-content: space-between;
 }
-footer div {
-  /* align-items: center; */
-}
 footer div a {
   padding-left: 0.5rem;
 }
