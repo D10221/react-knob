@@ -29,7 +29,7 @@ export default function SimpleSkin(props: React.SVGProps<SVGSVGElement> & {
   }
 }) {
   const { className, style, styles = DEFAULT_STYLES, classes = DEFAULT_CLASSES, ...rest } = props;
-  useStyle(`fill: ${DEFAULT_COLOR}; stroke: black; stroke-width: 9%`, circleClass);
+  useStyle(`fill: ${DEFAULT_COLOR}; stroke: black; stroke-width: 5%`, circleClass);
   useStyle(`width: 8%;height: 35%; fill: black;`, dialClass);
   return <svg
     viewBox="0 0 100 100"
