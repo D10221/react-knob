@@ -2,9 +2,11 @@
   "name": "@d10221/react-knob-skin-svg-simple",
   "private": true,
   "version": "1.0.0",
-  "main": "build/index.js",
-  "source": "src/index.tsx",
-  "types": "build/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "umd:main": "dist/index.umd.js",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
   "author": "<d10221@protonmail.com>",
   "description": "React Knob Skin SVG simple (internal)",
   "repository": "https://github.com/D10221/react-knob.git",
@@ -12,11 +14,12 @@
   "bugs": "https://github.com/D10221/react-knob/issues",
   "license": "MIT",
   "scripts": {
-    "build": "rimraf build && tsc -p .",
+    "build": "rimraf dist && microbundle",
     "test": "echo TODO: add jest, write tests",
-    "start": "rimraf build && tsc -p . --watch"
+    "start": "rimraf dist && microbundle --watch"
   },
   "devDependencies": {
+    "microbundle": "^0.11.0",
     "rimraf": "^3.0.0",
     "typescript": "^3.7.4"
   },
