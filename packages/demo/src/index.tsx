@@ -1,12 +1,12 @@
-import React, { useState, ChangeEvent } from "react";
+import ClickAwayListener from "@d10221/react-click-away-listener"; // external module
+import Knob from "@d10221/react-knob"; //local: module
+import SkinCss from "@d10221/react-knob-skin-css"; // local: module
+import SkinSvg from "@d10221/react-knob-skin-svg"; // local: module
+import SkinSvgSimple from "@d10221/react-knob-skin-svg-simple"; // local:module
+import React, { ChangeEvent, useState } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import Knob from "@d10221/react-knob";
-import SkinSvgSimple from "@d10221/react-knob-skin-svg-simple";
-import SkinSvg from "@d10221/react-knob-skin-svg";
-import SkinCss from "@d10221/react-knob-skin-css";
 import * as serviceWorker from "./serviceWorker";
-import ClickAwayListener from "@d10221/react-click-away-listener";
 const repoUrl = "https://github.com/D10221/react-knob";
 const issuesUrl = "https://github.com/D10221/react-knob/issues";
 /** */
@@ -21,8 +21,15 @@ const Icon = ({ label = "", value = "", className = "icon" }) => (
   </span>
 );
 const BUFFER_SIZE = 300;
-const DEFAULT_SKIN = "svg:1";
-const skins = ["css", "css:custom", "svg:1", "svg:2"];
+const DEFAULT_SKIN = "default";
+const skins = [
+  { key: "default", display: "default" },
+  { key: "css:1", display: "css" },
+  { key: "css:2", display: "css custom" },
+  { key: "svg:1", display: "svg fancy" },  
+  { key: "svg:2", display: "svg custom #1" },
+  { key: "svg:3", display: "svg custom #2" },
+];
 /**
  *
  */
@@ -32,22 +39,10 @@ function renderSkin({ skin = DEFAULT_SKIN, bufferSize = BUFFER_SIZE }) {
       // No Class
       return <SkinCss />;
     }
-    case "css:custom": {
-      // circleClass:optional
-      // dialClass:optional
-      // dialClass={"knob-dial"}
+    case "css:2": {     
       return <SkinCss circleClass={"knob-circle"} />;
     }
     case "svg:1": {
-      // local sample:
-      return (
-        <SkinSvgSimple
-        // styles={{ dial: { fill: "white" } }}
-        // classes={{ dial: "red-dial"}}
-        />
-      );
-    }
-    case "svg:2": {
       // inbuild svg?
       return (
         <SkinSvg
@@ -65,62 +60,71 @@ function renderSkin({ skin = DEFAULT_SKIN, bufferSize = BUFFER_SIZE }) {
         />
       );
     }
+    case "svg:2": {
+      // local sample:
+      return (
+        <SkinSvgSimple
+          styles={{ dial: { fill: "white" } }}
+        />
+      );
+    }
+    case "svg:3": {
+      // local sample:
+      return (
+        <SkinSvgSimple
+          classes={{ dial: "red-dial" }}
+        />
+      );
+    }
     default:
-      return null; //default skin
+      return null; //inbuilt skin
   }
 }
+const initialState = {
+  value: 0,
+  dialogOpen: true,
+  size: 65,
+  overlay: true,
+  skin: DEFAULT_SKIN,
+  bufferSize: BUFFER_SIZE,
+};
 /** */
 const App = () => {
   const [
     { value, dialogOpen, size, overlay, skin, bufferSize },
-    setState,
-  ] = useState({
-    value: 0,
-    dialogOpen: false,
-    size: 65,
-    overlay: true,
-    skin: DEFAULT_SKIN,
-    bufferSize: BUFFER_SIZE,
-  });
-  function changeValue(value: number) {
+    _setState,
+  ] = useState(initialState);
+  /** */
+  function setState(update: Partial<typeof initialState>) {
+    _setState({
+      value, dialogOpen, size, overlay, skin, bufferSize,
+      ...update,
+    })
+  }
+  function onValueChanged(value: number) {
     if (value < 0) return;
     if (value > 100) return;
-    setState({ value, dialogOpen, size, overlay, skin, bufferSize });
+    setState({ value });
   }
-  function handleInputValueChanged(e: ChangeEvent<HTMLInputElement>) {
-    changeValue(e.target.valueAsNumber);
+  function onInputValueChanged(e: ChangeEvent<HTMLInputElement>) {
+    onValueChanged(e.target.valueAsNumber);
   }
-  function handleDialogOpen(open: boolean) {
+  function onDialogOpenChanged(open: boolean) {
     return () =>
-      setState({ value, dialogOpen: open, size, overlay, skin, bufferSize });
+      setState({ dialogOpen: open });
   }
-  function handleSizeChanged(e: ChangeEvent<HTMLInputElement>) {
+  function onSizeChanged(e: ChangeEvent<HTMLInputElement>) {
     setState({
-      value,
-      dialogOpen,
       size: e.target.valueAsNumber,
-      overlay,
-      skin,
-      bufferSize,
     });
   }
   function onOverlayChanged(e: ChangeEvent<HTMLInputElement>) {
     setState({
-      value,
-      dialogOpen,
       overlay: e.target.checked,
-      size,
-      skin,
-      bufferSize,
     });
   }
-  function handleChangeSkin(e: React.MouseEvent<HTMLButtonElement>) {
+  function onSkinChanged(e: ChangeEvent<HTMLSelectElement>) {
     setState({
-      value,
-      dialogOpen,
-      overlay,
-      size,
-      bufferSize,
       skin: e.currentTarget.value,
     });
   }
@@ -132,14 +136,14 @@ const App = () => {
           <a aria-label="project home" href={repoUrl}>
             React Knob
           </a>
-          <button className="clear" onClick={handleDialogOpen(true)}>
+          <button className="clear" onClick={onDialogOpenChanged(true)}>
             <Icon value="⚙" label="Settings" />
           </button>
         </header>
         <main>
           <Knob
             value={value}
-            onChange={changeValue}
+            onChange={onValueChanged}
             size={size}
             min={0}
             max={100}
@@ -154,7 +158,7 @@ const App = () => {
             aria-label="knob value"
             type="number"
             value={value}
-            onChange={handleInputValueChanged}
+            onChange={onInputValueChanged}
             min={0}
             max={100}
           />
@@ -165,7 +169,7 @@ const App = () => {
             <a href={issuesUrl}>Feedback</a>
           </div>
         </footer>
-        <ClickAwayListener onClickAway={handleDialogOpen(false)}>
+        <ClickAwayListener onClickAway={onDialogOpenChanged(false)}>
           <dialog open={dialogOpen}>
             <div className="column">
               <div className="row">
@@ -176,7 +180,7 @@ const App = () => {
                   min={25}
                   max={250}
                   value={size}
-                  onChange={handleSizeChanged}
+                  onChange={onSizeChanged}
                 />
               </div>
               <div className="row">
@@ -189,16 +193,16 @@ const App = () => {
               </div>
               <div className="row">
                 <label>Skin</label>
-                {skins.map(skin => (
-                  <button
-                    key={`${skin}`}
-                    className="clear"
-                    onClick={handleChangeSkin}
-                    value={skin}
-                  >
-                    <Icon value={`${skin}`} className={"numeral"} />
-                  </button>
-                ))}
+                <select onChange={onSkinChanged}>
+                  {skins.map(skin => (
+                    <option
+                      key={`options-select-skin-option-${skin.key}`}
+                      value={skin.key}
+                    >
+                      {skin.display}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
           </dialog>
