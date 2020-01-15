@@ -1,7 +1,14 @@
 import KnobSkin from "@d10221/react-knob-skin-svg-simple"; //this should be bundled here!
 import Rotate from "@d10221/react-rotate"; //this should be bundled here!
 import React, { FunctionComponent } from "react";
-import { DEFAULT_BUFFER_SIZE, DEFAULT_MAX, DEFAULT_MIN, DEFAULT_SIZE, DEFAULT_STEP, DEFAULT_VALUE } from "./defaults";
+import {
+  DEFAULT_BUFFER_SIZE,
+  DEFAULT_MAX,
+  DEFAULT_MIN,
+  DEFAULT_SIZE,
+  DEFAULT_STEP,
+  DEFAULT_VALUE,
+} from "./defaults";
 import KnobContainer, { KnobContainerProps } from "./KnobContainer";
 import KnobOverlay from "./KnobOverlay";
 import useKnobState from "./KnobState";
@@ -13,7 +20,7 @@ type OnChange = (value: number) => any;
  * Holds internal state
  * Applies rotation via style.transform property
  * Gate for options
- * Controls overlay visibility  
+ * Controls overlay visibility
  */
 const Knob: FunctionComponent<{
   /**
@@ -30,8 +37,8 @@ const Knob: FunctionComponent<{
   step: number;
   /**
    * @description will be applied as 'width' and 'height' equally as style property
-   * @optional   
-   * @default 65px   
+   * @optional
+   * @default 65px
    * */
   size?: number | string | undefined;
   /**
@@ -40,18 +47,20 @@ const Knob: FunctionComponent<{
   bufferSize?: number;
   /**
    * do not render overlay
+   * @default true
    */
-  noOverlay?: boolean | undefined;
+  overlay?: boolean | undefined;
   /**
    * @optional
-   * @description callback with the new value   
+   * @description callback with the new value
    */
   onChange?: OnChange | undefined;
   /**
    * @description allows override this component main container props see './KnobContainer'
-   * 
+   * Note size is set by this props
+   * Style can be overriden by style/className
    */
-  containerProps?: Omit<KnobContainerProps, "size"> | undefined | undefined
+  containerProps?: Omit<KnobContainerProps, "size"> | undefined | undefined;
 }> = ({
   value = DEFAULT_VALUE,
   min = DEFAULT_MIN,
@@ -59,48 +68,43 @@ const Knob: FunctionComponent<{
   step = DEFAULT_STEP,
   size = DEFAULT_SIZE,
   bufferSize = DEFAULT_BUFFER_SIZE,
-  //
-  noOverlay = false,
-  // ...
+  overlay = true,
   onChange: _onchange = undefined as OnChange | undefined,
   children = undefined as React.ReactNode | undefined,
   containerProps = undefined,
 }) => {
+  const onChange: OnChange = val =>
+    typeof _onchange === "function" && val !== value && _onchange(val);
 
-    const onChange: OnChange = val =>
-      typeof _onchange === "function" && val !== value && _onchange(val);
-
-    const { state, move, done, start } = useKnobState(onChange);
-    const { cursorPos, knobCenter, scale, topPosition } = state;
-    const onPointerDown = PointerHandler({
-      value,
-      min,
-      max,
-      step,
-      onMove: move,
-      onDown: start,
-      onUp: done,
-    });
-    const rotation = getRotation({ value, min, max, bufferSize });
-    return (
-      <KnobContainer
-        size={size}
-        onPointerDown={onPointerDown}
-        {...containerProps}
-      >
-        <Rotate rotation={rotation}>
-          {children || <KnobSkin />}
-        </Rotate>
-        {noOverlay || !topPosition ? null : (
-          <KnobOverlay
-            cursorPos={cursorPos}
-            knobCenter={knobCenter}
-            scale={scale}
-            topPosition={topPosition}
-          />
-        )}
-      </KnobContainer>
-    );
-  };
+  const { state, move, done, start } = useKnobState(onChange);
+  const { cursorPos, knobCenter, scale, topPosition } = state;
+  const onPointerDown = PointerHandler({
+    value,
+    min,
+    max,
+    step,
+    onMove: move,
+    onDown: start,
+    onUp: done,
+  });
+  const rotation = getRotation({ value, min, max, bufferSize });
+  return (
+    <KnobContainer
+      size={size}
+      onPointerDown={onPointerDown}
+      {...containerProps}
+    >
+      <Rotate rotation={rotation}>{children || <KnobSkin />}</Rotate>
+      {!overlay || !topPosition ? null : (
+        <KnobOverlay
+          cursorPos={cursorPos}
+          knobCenter={knobCenter}
+          scale={scale}
+          topPosition={topPosition}
+        />
+      )}
+    </KnobContainer>
+  );
+};
 
 export default Knob;

@@ -24,89 +24,105 @@ const BUFFER_SIZE = 300;
 const DEFAULT_SKIN = "svg:1";
 const skins = ["css", "css:custom", "svg:1", "svg:2"];
 /**
- * 
+ *
  */
 function renderSkin({ skin = DEFAULT_SKIN, bufferSize = BUFFER_SIZE }) {
   switch (skin) {
     case "css": {
-      // No Class   
-      return <SkinCss />
+      // No Class
+      return <SkinCss />;
     }
     case "css:custom": {
       // circleClass:optional
       // dialClass:optional
       // dialClass={"knob-dial"}
-      return <SkinCss circleClass={"knob-circle"} />
+      return <SkinCss circleClass={"knob-circle"} />;
     }
-    case "svg:1":
-      {
-        // local sample: 
-        return <SkinSvgSimple
-          // styles={{ dial: { fill: "white" } }}
-          // classes={{ dial: "red-dial"}}
+    case "svg:1": {
+      // local sample:
+      return (
+        <SkinSvgSimple
+        // styles={{ dial: { fill: "white" } }}
+        // classes={{ dial: "red-dial"}}
         />
-      }
-    case "svg:2":
-      {
-        // inbuild svg?
-        return <SkinSvg
+      );
+    }
+    case "svg:2": {
+      // inbuild svg?
+      return (
+        <SkinSvg
           bufferSize={bufferSize}
-          classes={{
-            // labels: "red-labels"
-          }}
+          classes={
+            {
+              // labels: "red-labels"
+            }
+          }
           styles={{
             labels: {
               // display: "none"
-            }
+            },
           }}
         />
-      }
-    default: return null; //default skin
+      );
+    }
+    default:
+      return null; //default skin
   }
 }
 /** */
 const App = () => {
-  const [{ value, dialogOpen, size, noOverlay, skin, bufferSize }, setState] = useState({
+  const [
+    { value, dialogOpen, size, overlay, skin, bufferSize },
+    setState,
+  ] = useState({
     value: 0,
     dialogOpen: false,
     size: 65,
-    noOverlay: false,
+    overlay: true,
     skin: DEFAULT_SKIN,
     bufferSize: BUFFER_SIZE,
   });
   function changeValue(value: number) {
     if (value < 0) return;
     if (value > 100) return;
-    setState({ value, dialogOpen, size, noOverlay, skin, bufferSize });
+    setState({ value, dialogOpen, size, overlay, skin, bufferSize });
   }
   function handleInputValueChanged(e: ChangeEvent<HTMLInputElement>) {
     changeValue(e.target.valueAsNumber);
   }
   function handleDialogOpen(open: boolean) {
-    return () => setState({ value, dialogOpen: open, size, noOverlay, skin, bufferSize });
+    return () =>
+      setState({ value, dialogOpen: open, size, overlay, skin, bufferSize });
   }
   function handleSizeChanged(e: ChangeEvent<HTMLInputElement>) {
-    setState({ value, dialogOpen, size: e.target.valueAsNumber, noOverlay, skin, bufferSize });
-  }
-  function onNoOverlayChanged(e: ChangeEvent<HTMLInputElement>) {
     setState({
       value,
       dialogOpen,
-      noOverlay: !e.target.checked,
+      size: e.target.valueAsNumber,
+      overlay,
+      skin,
+      bufferSize,
+    });
+  }
+  function onOverlayChanged(e: ChangeEvent<HTMLInputElement>) {
+    setState({
+      value,
+      dialogOpen,
+      overlay: e.target.checked,
       size,
       skin,
-      bufferSize
+      bufferSize,
     });
   }
   function handleChangeSkin(e: React.MouseEvent<HTMLButtonElement>) {
     setState({
       value,
       dialogOpen,
-      noOverlay,
+      overlay,
       size,
       bufferSize,
-      skin: e.currentTarget.value
-    })
+      skin: e.currentTarget.value,
+    });
   }
   /** */
   function render() {
@@ -129,7 +145,7 @@ const App = () => {
             max={100}
             step={1}
             bufferSize={bufferSize}
-            noOverlay={noOverlay}
+            overlay={overlay}
           >
             {/* Children are Optional: defaults to 'KnobSkin' */}
             {renderSkin({ skin, bufferSize })}
@@ -164,19 +180,25 @@ const App = () => {
                 />
               </div>
               <div className="row">
-                <label htmlFor="no-overlay">Overlay</label>
+                <label htmlFor="Overlay">Overlay</label>
                 <input
                   type="checkbox"
-                  checked={!noOverlay}
-                  onChange={onNoOverlayChanged}
+                  checked={overlay}
+                  onChange={onOverlayChanged}
                 />
               </div>
               <div className="row">
                 <label>Skin</label>
                 {skins.map(skin => (
-                  <button key={`${skin}`} className="clear" onClick={handleChangeSkin} value={skin}>
+                  <button
+                    key={`${skin}`}
+                    className="clear"
+                    onClick={handleChangeSkin}
+                    value={skin}
+                  >
                     <Icon value={`${skin}`} className={"numeral"} />
-                  </button>))}
+                  </button>
+                ))}
               </div>
             </div>
           </dialog>

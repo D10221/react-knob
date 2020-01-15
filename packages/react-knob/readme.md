@@ -42,9 +42,10 @@ const Knob: FunctionComponent<{
    */
   bufferSize?: number;
   /**
-   * do not render overlay
+   * Render overlay
+   * @default true
    */
-  noOverlay?: boolean | undefined;
+  overlay?: boolean | undefined /* true */;
   /**
    * @optional
    * @description callback with the new value

@@ -1,15 +1,16 @@
 import React, { FunctionComponent } from "react";
 import { DEFAULT_SIZE } from "./defaults";
-export type KnobContainerProps = Partial<
-  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
+export type KnobContainerProps = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
 > & {
   size: number | string;
 };
 
-/** 
+/**
  * @description sets overall size removes touch action from inner children
- * 
-*/
+ *
+ */
 const KnobContainer: FunctionComponent<KnobContainerProps> = ({
   children,
   size = DEFAULT_SIZE,
@@ -27,20 +28,21 @@ const KnobContainer: FunctionComponent<KnobContainerProps> = ({
       }}
       className={className}
     >
-      {React.Children.map(children, (c => {
+      {React.Children.map(children, c => {
         if (React.isValidElement(c)) {
           const { style, ...p } = c.props;
           return React.cloneElement(c, {
-            ...p, style: {
+            ...p,
+            style: {
               // disable children 'clicks'
               touchAction: "none", // it should just work
               pointerEvents: "none",
               ...style, // but, allow override
-            } as React.CSSProperties
-          })
+            } as React.CSSProperties,
+          });
         }
         return c;
-      }))}
+      })}
     </div>
   );
 };
