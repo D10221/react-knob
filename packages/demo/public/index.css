@@ -221,3 +221,11 @@ footer div a {
 .border-thin-solid-color-extra-20 {
   border: 1px solid var(--color-extra-20);
 }
+.overlay-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  background-color: white
+}

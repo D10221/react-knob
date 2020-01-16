@@ -1,7 +1,6 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent} from "react";
 import KnobSkin from "@d10221/react-knob-skin-svg-simple"; //this should be bundled here!
 import Rotate from "@d10221/react-rotate"; //this should be bundled here!
-import Overlay from "@d10221/react-knob-overlay";
 import {
   DEFAULT_BUFFER_SIZE,
   DEFAULT_MAX,
@@ -49,10 +48,11 @@ const Knob: FunctionComponent<{
    */
   bufferSize?: number;
   /**
-   * render props
+   * render knob statee, ... after children
    * @default {KnobOverlay}
+   * @optional
    */
-  renderState?: RenderState<KnobState> | null | undefined;
+  render?: RenderState<KnobState> | null | undefined;
   /**
    * @optional
    * @description callback with the new value
@@ -71,7 +71,7 @@ const Knob: FunctionComponent<{
   step = DEFAULT_STEP,
   size = DEFAULT_SIZE,
   bufferSize = DEFAULT_BUFFER_SIZE,
-  renderState,
+  render,
   onChange: _onchange = undefined as OnChange | undefined,
   children = undefined as React.ReactNode | undefined,
   containerProps = undefined,
@@ -79,13 +79,7 @@ const Knob: FunctionComponent<{
 
     const onChange: OnChange = val =>
       typeof _onchange === "function" && val !== value && _onchange(val);
-
-    const [render, setRender] = useState(renderState)
-    useEffect(() => {
-      if (render) return;
-      setRender(Overlay)
-    });
-
+   
     const { state, move, done, start } = useKnobState(onChange);
     const { cursorPos, knobCenter, scale, topPosition } = state;
     const onPointerDown = PointerHandler({
