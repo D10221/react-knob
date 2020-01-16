@@ -80,7 +80,7 @@ function renderSkin({ skin = DEFAULT_SKIN, bufferSize = BUFFER_SIZE }) {
 }
 const initialState = {
   value: 0,
-  dialogOpen: true,
+  dialogOpen: false,
   size: 65,
   overlay: true,
   skin: DEFAULT_SKIN,
