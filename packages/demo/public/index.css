@@ -1,9 +1,20 @@
 :root {
-  --color1: #282c34;
-  --white: white;
-  --color3: whitesmoke;
-  --color4: #61dafb;
+  --color-extra-20: #61dafb;
   --rolandColor: #f37d02;
+  --color0: #f2eef1;
+  --color5: #ded9de;
+  --color10: #c8c4c9;
+  --color20: #978ea0;
+  --color30: #676277;
+  --color40: #404152;
+  /* ... */
+  --color50: #282c34;
+  /* ... */
+  --color60: #131420;
+  --color70: #0a0812;
+  --color80: #050309;
+  --color90: #020103;
+  --color100: #000000;
 }
 body {
   margin: 0;
@@ -19,8 +30,8 @@ body {
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  background-color: var(--color1);
-  color: var(--white);
+  background-color: var(--color50);
+  color: var(--color0);
   /* text-align: center; */
 }
 header {
@@ -34,19 +45,19 @@ header {
 header span[role="img"] {
   font-size: 1.3rem;
 }
-input {
-  outline: none;
-  font-size: inherit;
-  background-color: var(--color3);
-  padding: 0.5rem;
-  margin: 1rem;
-  color: var(--color1);
-}
-input[type="number"] {
-  max-width: 8rem;
+input[type=number] {
+  -moz-appearance: textfield;
+  -webkit-appearance: textfield;
+  border: none;
+  outline: none;  
+  box-shadow: none;
+  color: var(--color-extra-20);
+  background-color: var(--color40);
+  border: 1px solid var(--color-extra-20);
+  padding-left: 0.25rem;
 }
 a {
-  color: var(--color4);
+  color: var(--color-extra-20);
   text-decoration: none;
 }
 button.clear {
@@ -59,7 +70,7 @@ span[role="img"] {
   color: inherit;
 }
 .numeral {
-  color: var(--color4) !important;
+  color: var(--color-extra-20) !important;
   font-size: large;
 }
 code {
@@ -71,11 +82,57 @@ dialog {
   top: 1%;
   border: none;
   background: none;
+  display: none;
+  height: 0;
+  width: 1%;
+  height: 1%;  
+}
+dialog.open {
+  width: 70%;
+  max-width: 40rem;
+  height: 70%;
+  margin-top: 10%;
+  display: flex;
+  flex-direction: column;  
+  background-color: var(--color40);  
+  opacity: 0.95;  
+}
+pre {
+  color: var(--color10);
+  font-size: x-small;
 }
 label {
-  color: var(--color4);
+  color: var(--color-extra-20);
   text-transform: uppercase;
   padding: 0.5rem;
+}
+label.fixed {
+  width: 15rem;
+}
+select {  
+  background: none;
+  color: var(--color10);
+  outline: none;
+  border: none;
+  width: 10rem;  
+  font-size: medium;
+  font: inherit;
+  display: inline-block;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+select:after {
+  content: "?";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 60%;
+  line-height: 30px;
+  padding: 0 7px;
+  background: #000;
+  color: white;
+  pointer-events: none;
 }
 main {
   /* border: 1px solid pink;   */
@@ -106,6 +163,9 @@ footer div a {
   flex-direction: row;
   align-items: center;
 }
+.space-between {
+  justify-content: space-between;
+}
 .knob-circle-roland {
   /* note: 
     because the knob component injects css, 
@@ -114,12 +174,12 @@ footer div a {
     and will have higher priority, 
     to override color from 'main' css 
     mak overriding rule as !important */
-  background-color:  var(--rolandColor) !important;
+  background-color: var(--rolandColor) !important;
   /* This is the default color */
 }
-.knob-circle {  
+.knob-circle {
   /* custom */
-  background-color:  var(--white) !important;
+  background-color: var(--color0) !important;
 }
 /* 
 .knob-dial {  color: pink !important;} 
@@ -129,4 +189,26 @@ footer div a {
 }
 .red-dial {
   stroke: red !important;
+}
+.icon {
+  font-size: inherit;
+}
+.icon.xx-large {
+  font-size: xx-large;
+}
+.settings {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 1rem;
+}
+.margin-1 {
+  margin: 1rem
+}
+.align-center {
+  align-items: center;  
+  align-content: center;  
+}
+.color-extra-20 {  
+  color: var(--color-extra-20) !important;
 }

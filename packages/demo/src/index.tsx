@@ -6,14 +6,13 @@ import SkinSvgSimple from "@d10221/react-knob-skin-svg-simple"; // local:module
 import React, { ChangeEvent, useState } from "react";
 import ReactDOM from "react-dom";
 import * as serviceWorker from "./serviceWorker";
-
+(window as any).h = React.createElement; // hyperscript compatible
 const repoUrl = "https://github.com/D10221/react-knob";
 const issuesUrl = "https://github.com/D10221/react-knob/issues";
-
+/** */
 function round(n: number, decimals?: number) {
   return parseFloat(n.toFixed(decimals));
 }
-
 /** */
 const Icon = ({ label = "", value = "", className = "icon" }) => (
   <span
@@ -67,19 +66,11 @@ function renderSkin({ skin = DEFAULT_SKIN, bufferSize = BUFFER_SIZE }) {
     }
     case "svg:2": {
       // local sample:
-      return (
-        <SkinSvgSimple
-          styles={{ dial: { fill: "white" } }}
-        />
-      );
+      return <SkinSvgSimple styles={{ dial: { fill: "white" } }} />;
     }
     case "svg:3": {
       // local sample:
-      return (
-        <SkinSvgSimple
-          classes={{ dial: "red-dial" }}
-        />
-      );
+      return <SkinSvgSimple classes={{ dial: "red-dial" }} />;
     }
     default:
       return null; //inbuilt skin
@@ -94,7 +85,7 @@ const initialState = {
   bufferSize: BUFFER_SIZE,
   step: 1,
   min: 0,
-  max: 100
+  max: 100,
 };
 /** */
 const App = () => {
@@ -105,21 +96,28 @@ const App = () => {
   /** */
   function setState(update: Partial<typeof initialState>) {
     _setState({
-      value, dialogOpen, size, overlay, skin, bufferSize, step, min, max,
+      value,
+      dialogOpen,
+      size,
+      overlay,
+      skin,
+      bufferSize,
+      step,
+      min,
+      max,
       ...update,
-    })
+    });
+  }
+  function canChangeValue(value: number) {
+    return !isNaN(value) && value >= min && value <= max;
+
   }
   function onValueChanged(value: number) {
-    if (value < min) return;
-    if (value > max) return;
+    if (!canChangeValue(value)) return;
     setState({ value });
   }
   function onInputValueChanged(e: ChangeEvent<HTMLInputElement>) {
     onValueChanged(e.target.valueAsNumber);
-  }
-  function onDialogOpenChanged(open: boolean) {
-    return () =>
-      setState({ dialogOpen: open });
   }
   function onSizeChanged(e: ChangeEvent<HTMLInputElement>) {
     setState({
@@ -136,6 +134,20 @@ const App = () => {
       skin: e.currentTarget.value,
     });
   }
+  function stepUp() {
+    const next = value + step;
+    if (canChangeValue(next))
+      setState({
+        value: next
+      })
+  }
+  function stepDown() {
+    const next = value - step;
+    if (canChangeValue(next))
+      setState({
+        value: next
+      })
+  }
   /** */
   function render() {
     return (
@@ -144,9 +156,6 @@ const App = () => {
           <a aria-label="project home" href={repoUrl}>
             React Knob
           </a>
-          <button className="clear" onClick={onDialogOpenChanged(true)}>
-            <Icon value="⚙" label="Settings" />
-          </button>
         </header>
         <main>
           <Knob
@@ -162,14 +171,20 @@ const App = () => {
             {/* Children are Optional: defaults to 'KnobSkin' */}
             {renderSkin({ skin, bufferSize })}
           </Knob>
-          <input
-            aria-label="knob value"
-            type="number"
-            value={value}
-            onChange={onInputValueChanged}
-            min={min}
-            max={max}
-          />
+          <div className="row margin-1 align-center">
+            <button className="color-extra-20 clear" onClick={stepDown}><Icon value={"◀"} /></button>
+            <input
+              id="value-input"
+              type="number"
+              value={value}
+              onChange={onInputValueChanged}
+              min={min}
+              max={max}
+              step={step}
+              style={{ width: `${size * 0.7}px` }}
+            />
+            <button className="color-extra-20 clear" onClick={stepUp}><Icon value={"▶"} /></button>
+          </div>
         </main>
         <footer>
           <div>
@@ -177,11 +192,26 @@ const App = () => {
             <a href={issuesUrl}>Feedback</a>
           </div>
         </footer>
-        <ClickAwayListener onClickAway={onDialogOpenChanged(false)}>
-          <dialog open={dialogOpen}>
+        <div className="settings">
+          <button
+            className="clear"
+            onClick={e => {
+              e.preventDefault();
+              setState({ dialogOpen: !dialogOpen });
+            }}
+          >
+            <Icon value="⚙" label="Settings" className="icon xx-large" />
+          </button>
+        </div>
+        <ClickAwayListener
+          onClickAway={() => dialogOpen && setState({ dialogOpen: false })}
+        >
+          <dialog open={dialogOpen} className={dialogOpen ? "open" : ""}>
             <div className="column">
-              <div className="row">
-                <label htmlFor="size-input-range">Size</label>
+              <div className="row space-between">
+                <label className="fixed" htmlFor="size-input-range">
+                  Size
+                </label>
                 <input
                   id="size-input-range"
                   type="range"
@@ -191,16 +221,19 @@ const App = () => {
                   onChange={onSizeChanged}
                 />
               </div>
-              <div className="row">
-                <label htmlFor="Overlay">Overlay</label>
+              <div className="row space-between">
+                <label className="fixed" htmlFor="Overlay">
+                  Overlay
+                </label>
                 <input
                   type="checkbox"
                   checked={overlay}
                   onChange={onOverlayChanged}
                 />
+                <div style={{ flex: "1 0" }} />
               </div>
-              <div className="row">
-                <label>Skin</label>
+              <div className="row space-between">
+                <label className="fixed">Skin</label>
                 <select onChange={onSkinChanged}>
                   {skins.map(skin => (
                     <option
@@ -211,9 +244,10 @@ const App = () => {
                     </option>
                   ))}
                 </select>
+                <div style={{ flex: "1 0" }} />
               </div>
-              <div className="row">
-                <label>Step ({step})</label>
+              <div className="row space-between">
+                <label className="row fixed">Step</label>
                 <input
                   id="step-range"
                   type="range"
@@ -225,8 +259,10 @@ const App = () => {
                 />
               </div>
             </div>
-            <div className="row">
-              <label htmlFor="size-input-range">Min ({min})</label>
+            <div className="row space-between">
+              <label className="row fixed" htmlFor="size-input-range">
+                Min
+              </label>
               <input
                 id="min-range"
                 type="range"
@@ -237,8 +273,10 @@ const App = () => {
                 onChange={e => setState({ min: e.target.valueAsNumber })}
               />
             </div>
-            <div className="row">
-              <label htmlFor="size-input-range">Max ({max})</label>
+            <div className="row space-between">
+              <label className="row fixed" htmlFor="size-input-range">
+                Max
+              </label>
               <input
                 id="max-range"
                 type="range"
@@ -249,6 +287,35 @@ const App = () => {
                 onChange={e => setState({ max: e.target.valueAsNumber })}
               />
             </div>
+            <div className="row space-between">
+              <label className="row fixed" htmlFor="size-input-range">
+                Buffer Size
+              </label>
+              <input
+                id="buffer-size-range"
+                type="range"
+                min={100}
+                max={360}
+                step={1}
+                value={bufferSize}
+                onChange={e => setState({ bufferSize: e.target.valueAsNumber })}
+              />
+            </div>
+            <pre>
+              {JSON.stringify(
+                {
+                  size,
+                  overlay,
+                  skin,
+                  step,
+                  min,
+                  max,
+                  bufferSize,
+                },
+                null,
+                2,
+              )}
+            </pre>
           </dialog>
         </ClickAwayListener>
       </>
