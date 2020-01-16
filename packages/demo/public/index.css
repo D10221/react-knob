@@ -218,3 +218,6 @@ footer div a {
 .no-padding {
   padding: 0;
 }
+.border-thin-solid-color-extra-20 {
+  border: 1px solid var(--color-extra-20);
+}

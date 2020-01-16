@@ -110,6 +110,9 @@ const App = () => {
       ...update,
     });
   }
+  function reset(){
+    setState(initialState);
+  }
   function canChangeValue(value: number) {
     return !isNaN(value) && value >= min && value <= max;
 
@@ -149,6 +152,9 @@ const App = () => {
       setState({
         value: next
       })
+  }
+  function closeDialog() {
+    setState({ dialogOpen: false });
   }
   /** */
   function render() {
@@ -206,11 +212,16 @@ const App = () => {
           </button>
         </div>
         <ClickAwayListener
-          onClickAway={() => dialogOpen && setState({ dialogOpen: false })}
+          onClickAway={closeDialog}
         >
           <dialog open={dialogOpen} className={dialogOpen ? "open" : ""}>
             <div className="column">
-              <div className="row space-between no-margin no-padding"><FlexSpacer /><button onClick={() => setState({ dialogOpen: false })} className="clear color-extra-20"><Icon value={"✖"} /></button></div>
+              <div className="row space-between no-margin no-padding">
+                <FlexSpacer />
+                <button onClick={closeDialog}
+                  className="clear color-extra-20"><Icon value={"✖"} />
+                </button>
+              </div>
               <div className="row space-between">
                 <label className="fixed" htmlFor="size-input-range">
                   Size
@@ -307,20 +318,23 @@ const App = () => {
             <pre>
               {JSON.stringify(
                 {
-                  size,
-                  overlay,
-                  skin,
-                  step,
-                  min,
-                  max,
-                  bufferSize,
+                  SIZE: size,
+                  OVERLAY: overlay,
+                  SKIN: skin,
+                  STEP: step,
+                  MIN: min,
+                  MAX: max,
+                  "BUFFER SIZE": bufferSize,
                 },
                 null,
                 2,
-              )}
+              ).replace(/({|}|,|")/gi, "")}
             </pre>
+            <div className="row" style={{justifyContent: "flex-end"}}>
+              <button className="clear color-extra-20 border-thin-solid-color-extra-20" onClick={reset}><Icon value={"RESET"} /></button>
+            </div>
           </dialog>
-        </ClickAwayListener>
+        </ClickAwayListener >
       </>
     );
   }
