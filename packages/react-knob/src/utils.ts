@@ -11,20 +11,6 @@ export function isHtmlElement(e: any): e is HTMLElement {
   return e instanceof HTMLElement;
 }
 /** */
-export const cartesian2Polar: (
-  x: number[],
-  y: number[],
-) => { distance: number; degrees: number } =
-  /** */
-  ([x1, y1], [x2, y2]) => {
-    const x = x2 - x1;
-    const y = y2 - y1;
-    const distance = Math.sqrt(x * x + y * y);
-    const radians = Math.atan2(y, x);
-    const degrees = radians * (180 / Math.PI);
-    return { distance, degrees };
-  };
-/** */
 export function getRotation({
   value = 0,
   min = 0,

@@ -14,12 +14,17 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && microbundle",
-    "test": "echo TODO: add jest, write tests",
+    "test": "node -r ts-node/register -r esm node_modules/.bin/jest tests/index.test.tsx",
     "start": "rimraf dist && microbundle --watch"
   },
   "devDependencies": {
+    "@types/jest": "^24.9.0",
+    "esm": "^3.2.25",
+    "jest": "^24.9.0",
     "microbundle": "^0.11.0",
     "rimraf": "^3.0.0",
+    "ts-jest": "^24.3.0",
+    "ts-node": "^8.6.2",
     "typescript": "^3.7.4"
   },
   "peerDependencies": {
@@ -41,7 +46,7 @@
       "last 1 safari version"
     ]
   },
-  "files": [    
+  "files": [
     "dist/*",
     "src/*"
   ]

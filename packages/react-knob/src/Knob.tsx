@@ -1,6 +1,7 @@
+import React, { FunctionComponent, useEffect, useState } from "react";
 import KnobSkin from "@d10221/react-knob-skin-svg-simple"; //this should be bundled here!
 import Rotate from "@d10221/react-rotate"; //this should be bundled here!
-import React, { FunctionComponent } from "react";
+import Overlay from "@d10221/react-knob-overlay";
 import {
   DEFAULT_BUFFER_SIZE,
   DEFAULT_MAX,
@@ -10,10 +11,12 @@ import {
   DEFAULT_VALUE,
 } from "./defaults";
 import KnobContainer, { KnobContainerProps } from "./KnobContainer";
-import KnobOverlay from "./KnobOverlay";
 import useKnobState, { State as KnobState } from "./KnobState";
 import PointerHandler from "./PointerHandler";
 import { getRotation } from "./utils";
+
+type RenderState<S> = (state: S) => any
+
 type OnChange = (value: number) => any;
 /**
  * Creates a knob with default skin if no children provided
@@ -34,7 +37,7 @@ const Knob: FunctionComponent<{
   /** @description maximum applicable value @default 100*/
   max?: number;
   /** Step size @default 1 */
-  step: number;
+  step?: number | undefined;
   /**
    * @description will be applied as 'width' and 'height' equally as style property
    * @optional
@@ -49,7 +52,7 @@ const Knob: FunctionComponent<{
    * render props
    * @default {KnobOverlay}
    */
-  renderProps?: (state: KnobState) => any | undefined;
+  renderState?: RenderState<KnobState> | null | undefined;
   /**
    * @optional
    * @description callback with the new value
@@ -68,13 +71,20 @@ const Knob: FunctionComponent<{
   step = DEFAULT_STEP,
   size = DEFAULT_SIZE,
   bufferSize = DEFAULT_BUFFER_SIZE,
-  renderProps = KnobOverlay,
+  renderState,
   onChange: _onchange = undefined as OnChange | undefined,
   children = undefined as React.ReactNode | undefined,
   containerProps = undefined,
 }) => {
+
     const onChange: OnChange = val =>
       typeof _onchange === "function" && val !== value && _onchange(val);
+
+    const [render, setRender] = useState(renderState)
+    useEffect(() => {
+      if (render) return;
+      setRender(Overlay)
+    });
 
     const { state, move, done, start } = useKnobState(onChange);
     const { cursorPos, knobCenter, scale, topPosition } = state;
@@ -95,7 +105,7 @@ const Knob: FunctionComponent<{
         {...containerProps}
       >
         <Rotate rotation={rotation}>{children || <KnobSkin />}</Rotate>
-        {!topPosition ? null : typeof renderProps !== "function" ? null : renderProps({ cursorPos, knobCenter, scale, topPosition })}
+        {typeof render === "function" ? render({ cursorPos, knobCenter, scale, topPosition }) : null}
       </KnobContainer>
     );
   };
