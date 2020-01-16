@@ -24,6 +24,8 @@ const Icon = ({ label = "", value = "", className = "icon" }) => (
     {value}
   </span>
 );
+/** */
+const FlexSpacer = () => <div style={{ flex: "1 0" }} />;
 const BUFFER_SIZE = 300;
 const DEFAULT_SKIN = "default";
 const skins = [
@@ -78,7 +80,7 @@ function renderSkin({ skin = DEFAULT_SKIN, bufferSize = BUFFER_SIZE }) {
 }
 const initialState = {
   value: 0,
-  dialogOpen: false,
+  dialogOpen: true,
   size: 65,
   overlay: true,
   skin: DEFAULT_SKIN,
@@ -208,6 +210,7 @@ const App = () => {
         >
           <dialog open={dialogOpen} className={dialogOpen ? "open" : ""}>
             <div className="column">
+              <div className="row space-between no-margin no-padding"><FlexSpacer /><button onClick={() => setState({ dialogOpen: false })} className="clear color-extra-20"><Icon value={"✖"} /></button></div>
               <div className="row space-between">
                 <label className="fixed" htmlFor="size-input-range">
                   Size

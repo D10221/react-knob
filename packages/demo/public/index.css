@@ -82,20 +82,20 @@ dialog {
   top: 1%;
   border: none;
   background: none;
-  display: none;
-  height: 0;
-  width: 1%;
-  height: 1%;  
+  display: none;  
+  width: 1%;  
 }
 dialog.open {
   width: 70%;
   max-width: 40rem;
-  height: 70%;
-  margin-top: 10%;
+  max-height: 90%;
+  margin-top: 8%;
   display: flex;
   flex-direction: column;  
   background-color: var(--color40);  
   opacity: 0.95;  
+  overflow: hidden;
+  border: 1px dashed var(--color-extra-20);
 }
 pre {
   color: var(--color10);
@@ -211,4 +211,10 @@ footer div a {
 }
 .color-extra-20 {  
   color: var(--color-extra-20) !important;
+}
+.no-margin {
+  margin: 0;
+}
+.no-padding {
+  padding: 0;
 }
