@@ -1,12 +1,14 @@
 import { useState } from "react";
+export const initialState = {
+  scale: 1,
+  cursorPos: [] as number[],
+  knobCenter: [] as number[],
+  topPosition: 0,
+};
+export type State = typeof initialState;
 /** */
 export default function useKnobState(onChange?: (value: number) => any) {
-  const [state, setState] = useState({
-    scale: 1,
-    cursorPos: [] as number[],
-    knobCenter: [] as number[],
-    topPosition: 0,
-  });
+  const [state, setState] = useState(initialState);
   return {
     state,
     setState,

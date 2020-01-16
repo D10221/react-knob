@@ -1,5 +1,5 @@
 import ClickAwayListener from "@d10221/react-click-away-listener"; // external module
-import Knob from "@d10221/react-knob"; //local: module
+import Knob, { KnobOverlay } from "@d10221/react-knob"; //local: module
 import SkinCss from "@d10221/react-knob-skin-css"; // local: module
 import SkinSvg from "@d10221/react-knob-skin-svg"; // local: module
 import SkinSvgSimple from "@d10221/react-knob-skin-svg-simple"; // local:module
@@ -174,7 +174,7 @@ const App = () => {
             max={max}
             step={step}
             bufferSize={bufferSize}
-            overlay={overlay}
+            renderProps={overlay ? KnobOverlay : null}
           >
             {/* Children are Optional: defaults to 'KnobSkin' */}
             {renderSkin({ skin, bufferSize })}

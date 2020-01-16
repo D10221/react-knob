@@ -11,7 +11,7 @@ import {
 } from "./defaults";
 import KnobContainer, { KnobContainerProps } from "./KnobContainer";
 import KnobOverlay from "./KnobOverlay";
-import useKnobState from "./KnobState";
+import useKnobState, { State as KnobState } from "./KnobState";
 import PointerHandler from "./PointerHandler";
 import { getRotation } from "./utils";
 type OnChange = (value: number) => any;
@@ -46,10 +46,10 @@ const Knob: FunctionComponent<{
    */
   bufferSize?: number;
   /**
-   * do not render overlay
-   * @default true
+   * render props
+   * @default {KnobOverlay}
    */
-  overlay?: boolean | undefined;
+  renderProps?: (state: KnobState) => any | undefined;
   /**
    * @optional
    * @description callback with the new value
@@ -68,43 +68,36 @@ const Knob: FunctionComponent<{
   step = DEFAULT_STEP,
   size = DEFAULT_SIZE,
   bufferSize = DEFAULT_BUFFER_SIZE,
-  overlay = true,
+  renderProps = KnobOverlay,
   onChange: _onchange = undefined as OnChange | undefined,
   children = undefined as React.ReactNode | undefined,
   containerProps = undefined,
 }) => {
-  const onChange: OnChange = val =>
-    typeof _onchange === "function" && val !== value && _onchange(val);
+    const onChange: OnChange = val =>
+      typeof _onchange === "function" && val !== value && _onchange(val);
 
-  const { state, move, done, start } = useKnobState(onChange);
-  const { cursorPos, knobCenter, scale, topPosition } = state;
-  const onPointerDown = PointerHandler({
-    value,
-    min,
-    max,
-    step,
-    onMove: move,
-    onDown: start,
-    onUp: done,
-  });
-  const rotation = getRotation({ value, min, max, bufferSize });
-  return (
-    <KnobContainer
-      size={size}
-      onPointerDown={onPointerDown}
-      {...containerProps}
-    >
-      <Rotate rotation={rotation}>{children || <KnobSkin />}</Rotate>
-      {!overlay || !topPosition ? null : (
-        <KnobOverlay
-          cursorPos={cursorPos}
-          knobCenter={knobCenter}
-          scale={scale}
-          topPosition={topPosition}
-        />
-      )}
-    </KnobContainer>
-  );
-};
+    const { state, move, done, start } = useKnobState(onChange);
+    const { cursorPos, knobCenter, scale, topPosition } = state;
+    const onPointerDown = PointerHandler({
+      value,
+      min,
+      max,
+      step,
+      onMove: move,
+      onDown: start,
+      onUp: done,
+    });
+    const rotation = getRotation({ value, min, max, bufferSize });
+    return (
+      <KnobContainer
+        size={size}
+        onPointerDown={onPointerDown}
+        {...containerProps}
+      >
+        <Rotate rotation={rotation}>{children || <KnobSkin />}</Rotate>
+        {!topPosition ? null : typeof renderProps !== "function" ? null : renderProps({ cursorPos, knobCenter, scale, topPosition })}
+      </KnobContainer>
+    );
+  };
 
 export default Knob;

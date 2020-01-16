@@ -42,10 +42,10 @@ const Knob: FunctionComponent<{
    */
   bufferSize?: number;
   /**
-   * Render overlay
-   * @default true
+   * Aditional render , after children
+   * @default {KnobOverlay}
    */
-  overlay?: boolean | undefined /* true */;
+  renderProps?: (state: KnobState) => any | undefined;
   /**
    * @optional
    * @description callback with the new value
