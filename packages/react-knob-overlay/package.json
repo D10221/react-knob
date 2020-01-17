@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
+  "src": "src/index.ts",
   "author": "<d10221@protonmail.com>",
   "description": "React Knob Overlay (internal)",
   "repository": "https://github.com/D10221/react-knob.git",
