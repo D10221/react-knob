@@ -49,7 +49,7 @@ function renderSkin({ skin = DEFAULT_SKIN, bufferSize = BUFFER_SIZE }) {
     }
     case "css:2": {
       return <SkinCss circleClass={"knob-circle"} />;
-    }    
+    }
     case "svg:0": {
       // inbuild svg?
       return (
@@ -68,7 +68,8 @@ function renderSkin({ skin = DEFAULT_SKIN, bufferSize = BUFFER_SIZE }) {
         />
       );
     }
-    case "svg:1": return <SkinSvgSimple />
+    case "svg:1":
+      return <SkinSvgSimple />;
     case "svg:2": {
       // local sample:
       return <SkinSvgSimple styles={{ dial: { fill: "white" } }} />;
@@ -174,13 +175,14 @@ const App = () => {
           max={max}
           step={step}
           bufferSize={bufferSize}
-          render={state => (
+          render={React.memo(state => (
+            // css based overlay
             <KnobOverlay
               {...state}
-              lineClassName="overlay-line" // 
+              lineClassName="overlay-line" //
               // lineStyle={{ backgroundColor: "white" }}
             />
-          )}
+          ))}
         >
           {/* Children are Optional: defaults to 'KnobSkin' */}
           {renderSkin({ skin, bufferSize })}
