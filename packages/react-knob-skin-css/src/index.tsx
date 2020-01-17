@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
-import { useStyle, randomName, classNames } from "@d10221/react-css";
+import  useStyle from "@d10221/react-css";
+import { randomName, classNames } from "@d10221/jss";
 /**
  * Roland color
  */

@@ -1,7 +1,7 @@
 {
   "name": "@d10221/react-knob-skin-svg",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.0-beta.2",
   "main": "build/index.js",
   "source": "src/index.tsx",
   "types": "build/index.d.ts",

@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+S="@d10221"  # scope
+W="workspace"
+yarn $W $S/$1 build
