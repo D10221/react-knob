@@ -1,22 +1,19 @@
 {
   "files": {
-    "main.css": "/react-knob/static/css/main.ef9f6d8f.chunk.css",
-    "main.js": "/react-knob/static/js/main.02ceea68.chunk.js",
-    "main.js.map": "/react-knob/static/js/main.02ceea68.chunk.js.map",
+    "main.js": "/react-knob/static/js/main.56e0f0ea.chunk.js",
+    "main.js.map": "/react-knob/static/js/main.56e0f0ea.chunk.js.map",
     "runtime-main.js": "/react-knob/static/js/runtime-main.91ce32db.js",
     "runtime-main.js.map": "/react-knob/static/js/runtime-main.91ce32db.js.map",
-    "static/js/2.31f59f6c.chunk.js": "/react-knob/static/js/2.31f59f6c.chunk.js",
-    "static/js/2.31f59f6c.chunk.js.map": "/react-knob/static/js/2.31f59f6c.chunk.js.map",
+    "static/js/2.aa6906e9.chunk.js": "/react-knob/static/js/2.aa6906e9.chunk.js",
+    "static/js/2.aa6906e9.chunk.js.map": "/react-knob/static/js/2.aa6906e9.chunk.js.map",
     "index.html": "/react-knob/index.html",
-    "precache-manifest.a80ef8b1219a30e657deaacc382e2a83.js": "/react-knob/precache-manifest.a80ef8b1219a30e657deaacc382e2a83.js",
+    "precache-manifest.24fff44437027f7f9c1896a7cdf393f9.js": "/react-knob/precache-manifest.24fff44437027f7f9c1896a7cdf393f9.js",
     "service-worker.js": "/react-knob/service-worker.js",
-    "static/css/main.ef9f6d8f.chunk.css.map": "/react-knob/static/css/main.ef9f6d8f.chunk.css.map",
-    "static/js/2.31f59f6c.chunk.js.LICENSE": "/react-knob/static/js/2.31f59f6c.chunk.js.LICENSE"
+    "static/js/2.aa6906e9.chunk.js.LICENSE": "/react-knob/static/js/2.aa6906e9.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.91ce32db.js",
-    "static/js/2.31f59f6c.chunk.js",
-    "static/css/main.ef9f6d8f.chunk.css",
-    "static/js/main.02ceea68.chunk.js"
+    "static/js/2.aa6906e9.chunk.js",
+    "static/js/main.56e0f0ea.chunk.js"
   ]
 }
