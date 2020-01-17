@@ -9,13 +9,13 @@
   "source": "src/index.ts",
   "license": "MIT",
   "devDependencies": {
-    "microbundle": "^0.11.0",
-    "rimraf": "^3.0.0",
-    "typescript": "^3.7.4"
+    "microbundle": "0.11.0",
+    "rimraf": "3.0.0",
+    "typescript": "3.7.4"
   },
   "peerDependencies": {
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react": "16.12.0",
+    "react-dom": "16.12.0"
   },
   "scripts": {
     "build": "microbundle -f esm -i src/**",

@@ -18,16 +18,16 @@
     "start": "rimraf dist && microbundle --watch"
   },
   "devDependencies": {
-    "@types/jest": "^24.9.0",
-    "jest": "^24.9.0",
-    "microbundle": "^0.11.0",
-    "rimraf": "^3.0.0",
-    "ts-jest": "^24.3.0",
-    "typescript": "^3.7.4"
+    "@types/jest": "24.9.0",
+    "jest": "24.9.0",
+    "microbundle": "0.11.0",
+    "rimraf": "3.0.0",
+    "ts-jest": "24.3.0",
+    "typescript": "3.7.4"
   },
   "peerDependencies": {
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react": "16.12.0",
+    "react-dom": "16.12.0"
   },
   "eslintConfig": {
     "extends": "react-app"
