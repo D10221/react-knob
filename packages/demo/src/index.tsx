@@ -29,12 +29,12 @@ const Icon = ({ label = "", value = "", className = "icon" }) => (
 /** */
 const FlexSpacer = () => <div style={{ flex: "1 0" }} />;
 const BUFFER_SIZE = 300;
-const DEFAULT_SKIN = "default";
+const DEFAULT_SKIN = "svg:1";
 const skins = [
-  { key: "default", display: "default" },
   { key: "css:1", display: "css" },
   { key: "css:2", display: "css custom" },
-  { key: "svg:1", display: "svg fancy" },
+  { key: "svg:0", display: "svg fancy" },
+  { key: "svg:1", display: "svg simple" },
   { key: "svg:2", display: "svg custom #1" },
   { key: "svg:3", display: "svg custom #2" },
 ];
@@ -43,14 +43,14 @@ const skins = [
  */
 function renderSkin({ skin = DEFAULT_SKIN, bufferSize = BUFFER_SIZE }) {
   switch (skin) {
-    case "css": {
+    case "css:1": {
       // No Class
       return <SkinCss />;
     }
     case "css:2": {
       return <SkinCss circleClass={"knob-circle"} />;
-    }
-    case "svg:1": {
+    }    
+    case "svg:0": {
       // inbuild svg?
       return (
         <SkinSvg
@@ -68,6 +68,7 @@ function renderSkin({ skin = DEFAULT_SKIN, bufferSize = BUFFER_SIZE }) {
         />
       );
     }
+    case "svg:1": return <SkinSvgSimple />
     case "svg:2": {
       // local sample:
       return <SkinSvgSimple styles={{ dial: { fill: "white" } }} />;
@@ -255,7 +256,7 @@ const App = () => {
             </div>
             <div className="row space-between">
               <label className="fixed">Skin</label>
-              <select onChange={onSkinChanged}>
+              <select onChange={onSkinChanged} value={skin}>
                 {skins.map(skin => (
                   <option
                     key={`options-select-skin-option-${skin.key}`}
