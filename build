@@ -1,12 +1,11 @@
 #!/usr/bin/env sh
 S="@d10221"  # scope
 W="workspace"
-yarn $W $S/react-css build && \
-yarn $W $S/react-rotate build && \
-yarn $W $S/react-knob-skin-svg-simple build && \
-yarn $W $S/react-knob-skin-svg build && \
-yarn $W $S/react-knob-skin-css build && \
-yarn $W $S/react-knob-overlay build && \ 
-yarn $W $S/react-knob build && \ 
-yarn $w $S/demo build && \
-echo Done.
+yarn $W $S/react-css build  
+yarn $W $S/react-rotate build 
+yarn $W $S/react-knob-skin-svg-simple build  
+yarn $W $S/react-knob-skin-svg build 
+yarn $W $S/react-knob-skin-css build 
+yarn $W $S/react-knob-overlay build 
+yarn $W $S/react-knob build 
+yarn $W $S/react-knob-demo build
