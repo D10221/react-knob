@@ -19,7 +19,7 @@ const RenderKnobState = memo((state: any) => (
     lineClassName="overlay-line" //
     // lineStyle={{ backgroundColor: "white" }}
   />
-))
+));
 /** */
 function round(n: number, decimals?: number) {
   return parseFloat(n.toFixed(decimals));
@@ -184,7 +184,7 @@ const App = () => {
           max={max}
           step={step}
           bufferSize={bufferSize}
-          render={RenderKnobState}
+          render={overlay ? RenderKnobState : undefined}
         >
           {/* Children are Optional: defaults to 'KnobSkin' */}
           {renderSkin({ skin, bufferSize })}
