@@ -8,7 +8,6 @@ import Knob from "./";
 
 # Knob
 
-- Creates a knob with default [skin](../react-knob-skin-svg-simple) if no children provided
 - Holds internal state
 - Applies rotation via style.transform property
 - Gate for options
@@ -58,11 +57,11 @@ const Knob: FunctionComponent<{
 }>;
 ```
 
-Skins:
+Skins (children):
 
 The only skin requirement is to accept and apply the custom component the style mutation applied by [`<Rotate />`](../react-rotate/src/index.ts)
 
-Render: 
+Render:
 
 ... TODO
 
