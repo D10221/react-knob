@@ -5,12 +5,21 @@ import SkinCss from "@d10221/react-knob-skin-css"; // local: module
 import SkinSvg from "@d10221/react-knob-skin-svg"; // local: module
 import SkinSvgSimple from "@d10221/react-knob-skin-svg-simple"; // local:module
 // import KnobOverlay from "@d10221/react-knob-overlay";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState, memo } from "react";
 import ReactDOM from "react-dom";
 import * as serviceWorker from "./serviceWorker";
 (window as any).h = React.createElement; // hyperscript compatible
 const repoUrl = "https://github.com/D10221/react-knob";
 const issuesUrl = "https://github.com/D10221/react-knob/issues";
+/** */
+const RenderKnobState = memo((state: any) => (
+  // css based overlay
+  <KnobOverlay
+    {...state}
+    lineClassName="overlay-line" //
+    // lineStyle={{ backgroundColor: "white" }}
+  />
+))
 /** */
 function round(n: number, decimals?: number) {
   return parseFloat(n.toFixed(decimals));
@@ -175,14 +184,7 @@ const App = () => {
           max={max}
           step={step}
           bufferSize={bufferSize}
-          render={React.memo(state => (
-            // css based overlay
-            <KnobOverlay
-              {...state}
-              lineClassName="overlay-line" //
-              // lineStyle={{ backgroundColor: "white" }}
-            />
-          ))}
+          render={RenderKnobState}
         >
           {/* Children are Optional: defaults to 'KnobSkin' */}
           {renderSkin({ skin, bufferSize })}

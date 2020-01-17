@@ -73,12 +73,12 @@ const Knob: FunctionComponent<{
   step = DEFAULT_STEP,
   size = DEFAULT_SIZE,
   bufferSize = DEFAULT_BUFFER_SIZE,
-  render,
+  render: Render,
   onChange: _onchange = undefined as OnChange | undefined,
   children = undefined as React.ReactNode | undefined,
   containerProps = undefined,
 }) => {
-  render = render || noop;
+  Render = Render || noop;
   const onChange: OnChange = val =>
     typeof _onchange === "function" && val !== value && _onchange(val);
 
@@ -101,7 +101,7 @@ const Knob: FunctionComponent<{
       {...containerProps}
     >
       <Rotate rotation={rotation}>{children}</Rotate>
-      {render({ cursorPos, knobCenter, scale, topPosition, value })}
+      <Render {...{ cursorPos, knobCenter, scale, topPosition, value }} />
     </KnobContainer>
   );
 };
