@@ -12,7 +12,6 @@ import Knob from "./";
 - Holds internal state
 - Applies rotation via style.transform property
 - Gate for options
-- Controls overlay visibility
 
 ```typescript
 /**
@@ -45,7 +44,7 @@ const Knob: FunctionComponent<{
    * Aditional render , after children
    * @default {KnobOverlay}
    */
-  renderProps?: (state: KnobState) => any | undefined;
+  render?: ((state: KnobState) => any) | undefined;
   /**
    * @optional
    * @description callback with the new value
@@ -63,7 +62,12 @@ Skins:
 
 The only skin requirement is to accept and apply the custom component the style mutation applied by [`<Rotate />`](../react-rotate/src/index.ts)
 
-Sample Skin:
+Render: 
+
+... TODO
+
+
+Skin:
 
 ```typescript
 /**
@@ -89,12 +93,3 @@ export default function SimpleSkin(props: React.SVGProps<SVGSVGElement>) {
   </svg>
 ```
 
-Build:
-
-The following imports are 'local',
-It is 'shared code' and it should get bundled.
-
-```javascript
-import KnobSkin from "@d10221/react-knob-skin-svg-simple";
-import Rotate from "@d10221/react-rotate";
-```
