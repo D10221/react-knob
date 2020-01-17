@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import css from "./createStyle";
-import randomName from "./randomName";
+import { createStyle, randomName } from "@d10221/jss";
+
 /** */
-export default function useStyle(style: string, className = randomName()) {  
-  useEffect(() => css(style, className));
+export default function useStyle(style: string, className = randomName()) {
+  useEffect(() => createStyle(style, className), [style]);
   return className;
 }

@@ -1,0 +1,21 @@
+{
+  "name": "@d10221/jss",
+  "description": "Shared code: To be bundled, minimal css-in-js",
+  "private": true,
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.ts.js",
+  "source": "src/index.ts",
+  "license": "MIT",
+  "devDependencies": {
+    "microbundle": "0.11.0",
+    "rimraf": "3.0.0",
+    "typescript": "3.7.4"
+  },  
+  "scripts": {
+    "build": "rimraf dist && microbundle -f esm -i src/**",
+    "start": "rimraf dist && microbundle -f esm -i src/** --watch",
+    "test": "echo TODO "
+  }
+}

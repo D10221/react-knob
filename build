@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 S="@d10221"  # scope
 W="workspace"
+yarn $W $S/jss build  
 yarn $W $S/react-css build  
 yarn $W $S/react-rotate build 
 yarn $W $S/react-knob-skin-svg-simple build  
